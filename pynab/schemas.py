@@ -1335,7 +1335,7 @@ class Transaction:
         )
         self.flag_name: str = self._json.get("flag_name", "")
         self.account_id: str = self._json.get("account_id", "")
-        self.payee_id: str = self._json
+        self.payee_id: str = self._json.get("payee_id", "")
         self.category_id: str = self._json.get("category_id", "")
         self.transfer_account_id: str = self._json.get("transfer_account_id", "")
         self.transfer_transaction_id: str = self._json.get(
