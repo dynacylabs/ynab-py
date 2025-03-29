@@ -1,5 +1,7 @@
 # Api
 
+
+
 [Pynab Index](../README.md#pynab-index) / [Pynab](./index.md#pynab) / Api
 
 > Auto-generated documentation for [pynab.api](../../pynab/api.py) module.
@@ -988,7 +990,7 @@ Update the budgeted amount for a category in a specific month.
 - `month_id` *str, optional* - The ID of the month. Defaults to "current".
 - `category` *schemas.Category, optional* - The category object. Defaults to None.
 - `category_id` *str, optional* - The ID of the category. Defaults to None.
-- `request_body` *str, optional* - The request body. Defaults to None.
+- `budgeted` *int, optional* - The new value for the amount assigned to this category
 
 #### Returns
 
@@ -1009,7 +1011,7 @@ def update_category_for_month(
     month_id: str = "current",
     category: schemas.Category = None,
     category_id: str = None,
-    request_body: str = None,
+    budgeted: int = 0,
 ): ...
 ```
 

@@ -1,12 +1,14 @@
 # Test Live Api
 
+
+
 [Pynab Index](../README.md#pynab-index) / [Testing](./index.md#testing) / Test Live Api
 
 > Auto-generated documentation for [testing.test_live_api](../../testing/test_live_api.py) module.
 
 #### Attributes
 
-- `BEARER` - Enter API bearer token here: 'YOUR_BEARER_TOKEN_HERE'
+- `secrets` - get API bearer token from .env: dotenv_values('testing/.env')
 
 
 - [Test Live Api](#test-live-api)
@@ -83,7 +85,7 @@
 
 ## account
 
-[Show source in test_live_api.py:233](../../testing/test_live_api.py#L233)
+[Show source in test_live_api.py:236](../../testing/test_live_api.py#L236)
 
 Retrieve a specific account from the provided accounts dictionary.
 
@@ -113,7 +115,7 @@ def account(test_pynab, budget, accounts): ...
 
 ## account_transactions
 
-[Show source in test_live_api.py:781](../../testing/test_live_api.py#L781)
+[Show source in test_live_api.py:784](../../testing/test_live_api.py#L784)
 
 Retrieve transactions for a specific account within a budget.
 
@@ -138,7 +140,7 @@ def account_transactions(test_pynab, budget, account): ...
 
 ## accounts
 
-[Show source in test_live_api.py:199](../../testing/test_live_api.py#L199)
+[Show source in test_live_api.py:202](../../testing/test_live_api.py#L202)
 
 Fetches the accounts for a given budget.
 
@@ -162,7 +164,7 @@ def accounts(test_pynab, budget): ...
 
 ## budget
 
-[Show source in test_live_api.py:123](../../testing/test_live_api.py#L123)
+[Show source in test_live_api.py:126](../../testing/test_live_api.py#L126)
 
 Retrieve a specific budget from the provided budgets.
 
@@ -191,7 +193,7 @@ def budget(test_pynab, budgets): ...
 
 ## budget_settings
 
-[Show source in test_live_api.py:163](../../testing/test_live_api.py#L163)
+[Show source in test_live_api.py:166](../../testing/test_live_api.py#L166)
 
 Retrieve the budget settings for a given budget.
 
@@ -215,7 +217,7 @@ def budget_settings(test_pynab, budget): ...
 
 ## budgets
 
-[Show source in test_live_api.py:89](../../testing/test_live_api.py#L89)
+[Show source in test_live_api.py:92](../../testing/test_live_api.py#L92)
 
 Fetches the budgets from the API.
 
@@ -238,7 +240,7 @@ def budgets(test_pynab): ...
 
 ## category
 
-[Show source in test_live_api.py:333](../../testing/test_live_api.py#L333)
+[Show source in test_live_api.py:336](../../testing/test_live_api.py#L336)
 
 Retrieve a specific category from a category group in a budget.
 
@@ -267,7 +269,7 @@ def category(test_pynab, category_group, budget): ...
 
 ## category_for_month
 
-[Show source in test_live_api.py:377](../../testing/test_live_api.py#L377)
+[Show source in test_live_api.py:380](../../testing/test_live_api.py#L380)
 
 Retrieve the category details for the current month from the budget.
 
@@ -292,7 +294,7 @@ def category_for_month(test_pynab, budget, category): ...
 
 ## category_group
 
-[Show source in test_live_api.py:314](../../testing/test_live_api.py#L314)
+[Show source in test_live_api.py:317](../../testing/test_live_api.py#L317)
 
 Retrieves a category group from the provided category groups dictionary that matches a specific name.
 
@@ -317,7 +319,7 @@ def category_group(test_pynab, budget, category_groups): ...
 
 ## category_groups
 
-[Show source in test_live_api.py:279](../../testing/test_live_api.py#L279)
+[Show source in test_live_api.py:282](../../testing/test_live_api.py#L282)
 
 Retrieve category groups for a given budget.
 
@@ -341,7 +343,7 @@ def category_groups(test_pynab, budget): ...
 
 ## category_transactions
 
-[Show source in test_live_api.py:826](../../testing/test_live_api.py#L826)
+[Show source in test_live_api.py:829](../../testing/test_live_api.py#L829)
 
 Retrieve transactions for a specific category within a budget.
 
@@ -366,7 +368,7 @@ def category_transactions(test_pynab, budget, category): ...
 
 ## create_account
 
-[Show source in test_live_api.py:1048](../../testing/test_live_api.py#L1048)
+[Show source in test_live_api.py:1051](../../testing/test_live_api.py#L1051)
 
 Creates a new account in the specified budget.
 
@@ -390,7 +392,7 @@ def create_account(test_pynab, budget): ...
 
 ## create_scheduled_transaction
 
-[Show source in test_live_api.py:1417](../../testing/test_live_api.py#L1417)
+[Show source in test_live_api.py:1420](../../testing/test_live_api.py#L1420)
 
 Create a scheduled transaction using the provided test_pynab instance.
 
@@ -415,7 +417,7 @@ def create_scheduled_transaction(test_pynab, budget, scheduled_transaction): ...
 
 ## create_transactions
 
-[Show source in test_live_api.py:1212](../../testing/test_live_api.py#L1212)
+[Show source in test_live_api.py:1215](../../testing/test_live_api.py#L1215)
 
 Create multiple transactions in the specified budget using the test_pynab API.
 
@@ -440,7 +442,7 @@ def create_transactions(test_pynab, budget, transaction): ...
 
 ## delete_transaction
 
-[Show source in test_live_api.py:1367](../../testing/test_live_api.py#L1367)
+[Show source in test_live_api.py:1370](../../testing/test_live_api.py#L1370)
 
 Deletes a transaction from the given budget if it matches a specific memo.
 
@@ -465,7 +467,7 @@ def delete_transaction(test_pynab, budget, transactions): ...
 
 ## get_payee_locations
 
-[Show source in test_live_api.py:565](../../testing/test_live_api.py#L565)
+[Show source in test_live_api.py:568](../../testing/test_live_api.py#L568)
 
 Retrieve the locations associated with a specific payee within a given budget.
 
@@ -490,7 +492,7 @@ def get_payee_locations(test_pynab, budget, payee): ...
 
 ## import_transactions
 
-[Show source in test_live_api.py:703](../../testing/test_live_api.py#L703)
+[Show source in test_live_api.py:706](../../testing/test_live_api.py#L706)
 
 Imports transactions for a given budget using the test_pynab API.
 
@@ -514,7 +516,7 @@ def import_transactions(test_pynab, budget): ...
 
 ## month
 
-[Show source in test_live_api.py:635](../../testing/test_live_api.py#L635)
+[Show source in test_live_api.py:638](../../testing/test_live_api.py#L638)
 
 Retrieve the current month's budget data from the API.
 
@@ -538,7 +540,7 @@ def month(test_pynab, budget): ...
 
 ## month_transactions
 
-[Show source in test_live_api.py:914](../../testing/test_live_api.py#L914)
+[Show source in test_live_api.py:917](../../testing/test_live_api.py#L917)
 
 Retrieve transactions for a specific month from the API.
 
@@ -563,7 +565,7 @@ def month_transactions(test_pynab, budget, month): ...
 
 ## months
 
-[Show source in test_live_api.py:601](../../testing/test_live_api.py#L601)
+[Show source in test_live_api.py:604](../../testing/test_live_api.py#L604)
 
 Fetches the months data from the API for a given budget.
 
@@ -587,7 +589,7 @@ def months(test_pynab, budget): ...
 
 ## payee
 
-[Show source in test_live_api.py:451](../../testing/test_live_api.py#L451)
+[Show source in test_live_api.py:454](../../testing/test_live_api.py#L454)
 
 Retrieves a specific payee from the provided payees dictionary and fetches its details using the test_pynab API.
 
@@ -616,7 +618,7 @@ def payee(budget, test_pynab, payees): ...
 
 ## payee_locations
 
-[Show source in test_live_api.py:495](../../testing/test_live_api.py#L495)
+[Show source in test_live_api.py:498](../../testing/test_live_api.py#L498)
 
 Retrieve payee locations for a given budget.
 
@@ -640,7 +642,7 @@ def payee_locations(test_pynab, budget): ...
 
 ## payee_transactions
 
-[Show source in test_live_api.py:871](../../testing/test_live_api.py#L871)
+[Show source in test_live_api.py:874](../../testing/test_live_api.py#L874)
 
 Retrieve transactions for a specific payee within a given budget.
 
@@ -665,7 +667,7 @@ def payee_transactions(test_pynab, budget, payee): ...
 
 ## payees
 
-[Show source in test_live_api.py:420](../../testing/test_live_api.py#L420)
+[Show source in test_live_api.py:423](../../testing/test_live_api.py#L423)
 
 Retrieve the list of payees for a given budget.
 
@@ -689,7 +691,7 @@ def payees(test_pynab, budget): ...
 
 ## scheduled_transaction
 
-[Show source in test_live_api.py:996](../../testing/test_live_api.py#L996)
+[Show source in test_live_api.py:999](../../testing/test_live_api.py#L999)
 
 Retrieve a specific scheduled transaction from a budget.
 
@@ -719,7 +721,7 @@ def scheduled_transaction(test_pynab, budget, scheduled_transactions): ...
 
 ## scheduled_transactions
 
-[Show source in test_live_api.py:954](../../testing/test_live_api.py#L954)
+[Show source in test_live_api.py:957](../../testing/test_live_api.py#L957)
 
 Retrieve scheduled transactions for a given budget.
 
@@ -743,7 +745,7 @@ def scheduled_transactions(test_pynab, budget): ...
 
 ## test_account
 
-[Show source in test_live_api.py:261](../../testing/test_live_api.py#L261)
+[Show source in test_live_api.py:264](../../testing/test_live_api.py#L264)
 
 Test the account object.
 
@@ -767,7 +769,7 @@ def test_account(account): ...
 
 ## test_account_transactions
 
-[Show source in test_live_api.py:803](../../testing/test_live_api.py#L803)
+[Show source in test_live_api.py:806](../../testing/test_live_api.py#L806)
 
 Test the account_transactions function.
 
@@ -795,7 +797,7 @@ def test_account_transactions(account_transactions): ...
 
 ## test_accounts
 
-[Show source in test_live_api.py:215](../../testing/test_live_api.py#L215)
+[Show source in test_live_api.py:218](../../testing/test_live_api.py#L218)
 
 Test the accounts data structure.
 
@@ -818,7 +820,7 @@ def test_accounts(accounts): ...
 
 ## test_budget
 
-[Show source in test_live_api.py:148](../../testing/test_live_api.py#L148)
+[Show source in test_live_api.py:151](../../testing/test_live_api.py#L151)
 
 Test the budget object.
 
@@ -839,7 +841,7 @@ def test_budget(budget): ...
 
 ## test_budget_settings
 
-[Show source in test_live_api.py:179](../../testing/test_live_api.py#L179)
+[Show source in test_live_api.py:182](../../testing/test_live_api.py#L182)
 
 Test the budget_settings function.
 
@@ -865,7 +867,7 @@ def test_budget_settings(budget_settings): ...
 
 ## test_budgets
 
-[Show source in test_live_api.py:104](../../testing/test_live_api.py#L104)
+[Show source in test_live_api.py:107](../../testing/test_live_api.py#L107)
 
 Test the budgets data structure.
 
@@ -890,7 +892,7 @@ def test_budgets(budgets): ...
 
 ## test_category
 
-[Show source in test_live_api.py:360](../../testing/test_live_api.py#L360)
+[Show source in test_live_api.py:363](../../testing/test_live_api.py#L363)
 
 Test the validity of a category object.
 
@@ -913,7 +915,7 @@ def test_category(category): ...
 
 ## test_category_for_month
 
-[Show source in test_live_api.py:399](../../testing/test_live_api.py#L399)
+[Show source in test_live_api.py:402](../../testing/test_live_api.py#L402)
 
 Test the [category_for_month](#category_for_month) function.
 
@@ -941,7 +943,7 @@ def test_category_for_month(category_for_month): ...
 
 ## test_category_groups
 
-[Show source in test_live_api.py:295](../../testing/test_live_api.py#L295)
+[Show source in test_live_api.py:298](../../testing/test_live_api.py#L298)
 
 Test the category_groups function.
 
@@ -966,7 +968,7 @@ def test_category_groups(category_groups): ...
 
 ## test_category_transactions
 
-[Show source in test_live_api.py:848](../../testing/test_live_api.py#L848)
+[Show source in test_live_api.py:851](../../testing/test_live_api.py#L851)
 
 Test the category_transactions function.
 
@@ -994,7 +996,7 @@ def test_category_transactions(category_transactions): ...
 
 ## test_create_account
 
-[Show source in test_live_api.py:1069](../../testing/test_live_api.py#L1069)
+[Show source in test_live_api.py:1072](../../testing/test_live_api.py#L1072)
 
 Test the creation of an account.
 
@@ -1019,7 +1021,7 @@ def test_create_account(create_account): ...
 
 ## test_create_scheduled_transaction
 
-[Show source in test_live_api.py:1436](../../testing/test_live_api.py#L1436)
+[Show source in test_live_api.py:1439](../../testing/test_live_api.py#L1439)
 
 Test the creation of a scheduled transaction.
 
@@ -1045,7 +1047,7 @@ def test_create_scheduled_transaction(scheduled_transaction): ...
 
 ## test_create_transactions
 
-[Show source in test_live_api.py:1237](../../testing/test_live_api.py#L1237)
+[Show source in test_live_api.py:1240](../../testing/test_live_api.py#L1240)
 
 Test the creation of transactions.
 
@@ -1079,7 +1081,7 @@ def test_create_transactions(create_transactions): ...
 
 ## test_delete_transaction
 
-[Show source in test_live_api.py:1396](../../testing/test_live_api.py#L1396)
+[Show source in test_live_api.py:1399](../../testing/test_live_api.py#L1399)
 
 Test the deletion of a transaction.
 
@@ -1106,7 +1108,7 @@ def test_delete_transaction(delete_transaction): ...
 
 ## test_get_payee_locations
 
-[Show source in test_live_api.py:582](../../testing/test_live_api.py#L582)
+[Show source in test_live_api.py:585](../../testing/test_live_api.py#L585)
 
 Test the retrieval of payee locations.
 
@@ -1129,7 +1131,7 @@ def test_get_payee_locations(get_payee_locations): ...
 
 ## test_import_transactions
 
-[Show source in test_live_api.py:719](../../testing/test_live_api.py#L719)
+[Show source in test_live_api.py:722](../../testing/test_live_api.py#L722)
 
 Test the import_transactions function.
 
@@ -1154,7 +1156,7 @@ def test_import_transactions(import_transactions): ...
 
 ## test_month
 
-[Show source in test_live_api.py:651](../../testing/test_live_api.py#L651)
+[Show source in test_live_api.py:654](../../testing/test_live_api.py#L654)
 
 Test the [month](#month) object.
 
@@ -1177,7 +1179,7 @@ def test_month(month): ...
 
 ## test_month_transactions
 
-[Show source in test_live_api.py:936](../../testing/test_live_api.py#L936)
+[Show source in test_live_api.py:939](../../testing/test_live_api.py#L939)
 
 Test the validity of month transactions.
 
@@ -1200,7 +1202,7 @@ def test_month_transactions(month_transactions): ...
 
 ## test_months
 
-[Show source in test_live_api.py:617](../../testing/test_live_api.py#L617)
+[Show source in test_live_api.py:620](../../testing/test_live_api.py#L620)
 
 Test function to validate the 'months' data structure.
 
@@ -1223,7 +1225,7 @@ def test_months(months): ...
 
 ## test_payee
 
-[Show source in test_live_api.py:475](../../testing/test_live_api.py#L475)
+[Show source in test_live_api.py:478](../../testing/test_live_api.py#L478)
 
 Test the payee object.
 
@@ -1249,7 +1251,7 @@ def test_payee(payee): ...
 
 ## test_payee_location
 
-[Show source in test_live_api.py:529](../../testing/test_live_api.py#L529)
+[Show source in test_live_api.py:532](../../testing/test_live_api.py#L532)
 
 Test the retrieval of a specific payee location from the API.
 
@@ -1281,7 +1283,7 @@ def test_payee_location(test_pynab, budget, payee_locations): ...
 
 ## test_payee_locations
 
-[Show source in test_live_api.py:513](../../testing/test_live_api.py#L513)
+[Show source in test_live_api.py:516](../../testing/test_live_api.py#L516)
 
 Test the payee_locations function.
 
@@ -1303,7 +1305,7 @@ def test_payee_locations(payee_locations): ...
 
 ## test_payee_transactions
 
-[Show source in test_live_api.py:893](../../testing/test_live_api.py#L893)
+[Show source in test_live_api.py:896](../../testing/test_live_api.py#L896)
 
 Test the payee_transactions function.
 
@@ -1330,7 +1332,7 @@ def test_payee_transactions(payee_transactions): ...
 
 ## test_payees
 
-[Show source in test_live_api.py:436](../../testing/test_live_api.py#L436)
+[Show source in test_live_api.py:439](../../testing/test_live_api.py#L439)
 
 Test the payees function.
 
@@ -1352,7 +1354,7 @@ def test_payees(payees): ...
 
 ## test_pynab
 
-[Show source in test_live_api.py:22](../../testing/test_live_api.py#L22)
+[Show source in test_live_api.py:25](../../testing/test_live_api.py#L25)
 
 Test the initialization of the Pynab class with a bearer token.
 
@@ -1374,7 +1376,7 @@ def test_pynab(): ...
 
 ## test_pynab_init
 
-[Show source in test_live_api.py:37](../../testing/test_live_api.py#L37)
+[Show source in test_live_api.py:40](../../testing/test_live_api.py#L40)
 
 Test the initialization of the Pynab instance.
 
@@ -1397,7 +1399,7 @@ def test_pynab_init(test_pynab): ...
 
 ## test_scheduled_transaction
 
-[Show source in test_live_api.py:1028](../../testing/test_live_api.py#L1028)
+[Show source in test_live_api.py:1031](../../testing/test_live_api.py#L1031)
 
 Test the scheduled_transaction function.
 
@@ -1423,7 +1425,7 @@ def test_scheduled_transaction(scheduled_transaction): ...
 
 ## test_scheduled_transactions
 
-[Show source in test_live_api.py:972](../../testing/test_live_api.py#L972)
+[Show source in test_live_api.py:975](../../testing/test_live_api.py#L975)
 
 Test the scheduled transactions.
 
@@ -1449,7 +1451,7 @@ def test_scheduled_transactions(scheduled_transactions): ...
 
 ## test_transaction
 
-[Show source in test_live_api.py:766](../../testing/test_live_api.py#L766)
+[Show source in test_live_api.py:769](../../testing/test_live_api.py#L769)
 
 Test the transaction object.
 
@@ -1470,7 +1472,7 @@ def test_transaction(transaction): ...
 
 ## test_transactions
 
-[Show source in test_live_api.py:688](../../testing/test_live_api.py#L688)
+[Show source in test_live_api.py:691](../../testing/test_live_api.py#L691)
 
 Test the transactions function.
 
@@ -1492,7 +1494,7 @@ def test_transactions(transactions): ...
 
 ## test_update_category
 
-[Show source in test_live_api.py:1112](../../testing/test_live_api.py#L1112)
+[Show source in test_live_api.py:1115](../../testing/test_live_api.py#L1115)
 
 Test the update_category function.
 
@@ -1519,7 +1521,7 @@ def test_update_category(update_category): ...
 
 ## test_update_category_for_month
 
-[Show source in test_live_api.py:1154](../../testing/test_live_api.py#L1154)
+[Show source in test_live_api.py:1157](../../testing/test_live_api.py#L1157)
 
 Test the update_category_for_month function.
 
@@ -1542,7 +1544,7 @@ def test_update_category_for_month(update_category_for_month): ...
 
 ## test_update_payee
 
-[Show source in test_live_api.py:1192](../../testing/test_live_api.py#L1192)
+[Show source in test_live_api.py:1195](../../testing/test_live_api.py#L1195)
 
 Test the update_payee function.
 
@@ -1568,7 +1570,7 @@ def test_update_payee(update_payee): ...
 
 ## test_update_transactions
 
-[Show source in test_live_api.py:1299](../../testing/test_live_api.py#L1299)
+[Show source in test_live_api.py:1302](../../testing/test_live_api.py#L1302)
 
 Test the update_transactions function.
 
@@ -1592,7 +1594,7 @@ def test_update_transactions(update_transactions): ...
 
 ## test_update_transactions
 
-[Show source in test_live_api.py:1345](../../testing/test_live_api.py#L1345)
+[Show source in test_live_api.py:1348](../../testing/test_live_api.py#L1348)
 
 Test the update_transactions function.
 
@@ -1619,7 +1621,7 @@ def test_update_transactions(update_transactions): ...
 
 ## test_user
 
-[Show source in test_live_api.py:69](../../testing/test_live_api.py#L69)
+[Show source in test_live_api.py:72](../../testing/test_live_api.py#L72)
 
 Test the user object.
 
@@ -1645,7 +1647,7 @@ def test_user(user): ...
 
 ## transaction
 
-[Show source in test_live_api.py:737](../../testing/test_live_api.py#L737)
+[Show source in test_live_api.py:740](../../testing/test_live_api.py#L740)
 
 Retrieve a specific transaction from a budget.
 
@@ -1676,7 +1678,7 @@ def transaction(test_pynab, budget, transactions): ...
 
 ## transactions
 
-[Show source in test_live_api.py:668](../../testing/test_live_api.py#L668)
+[Show source in test_live_api.py:671](../../testing/test_live_api.py#L671)
 
 Retrieve transactions from the API for a given budget.
 
@@ -1700,7 +1702,7 @@ def transactions(test_pynab, budget): ...
 
 ## update_category
 
-[Show source in test_live_api.py:1088](../../testing/test_live_api.py#L1088)
+[Show source in test_live_api.py:1091](../../testing/test_live_api.py#L1091)
 
 Update a category in the specified budget and category group.
 
@@ -1726,7 +1728,7 @@ def update_category(test_pynab, budget, category_group, category): ...
 
 ## update_category_for_month
 
-[Show source in test_live_api.py:1133](../../testing/test_live_api.py#L1133)
+[Show source in test_live_api.py:1136](../../testing/test_live_api.py#L1136)
 
 Update the category for the current month in the given budget.
 
@@ -1751,7 +1753,7 @@ def update_category_for_month(test_pynab, budget, category): ...
 
 ## update_payee
 
-[Show source in test_live_api.py:1171](../../testing/test_live_api.py#L1171)
+[Show source in test_live_api.py:1174](../../testing/test_live_api.py#L1174)
 
 Update the name of a payee in the specified budget.
 
@@ -1776,7 +1778,7 @@ def update_payee(test_pynab, budget, payee): ...
 
 ## update_transactions
 
-[Show source in test_live_api.py:1270](../../testing/test_live_api.py#L1270)
+[Show source in test_live_api.py:1273](../../testing/test_live_api.py#L1273)
 
 Update transactions in the given budget using the test_pynab API.
 
@@ -1807,7 +1809,7 @@ def update_transactions(test_pynab, budget, create_transactions): ...
 
 ## update_transactions
 
-[Show source in test_live_api.py:1318](../../testing/test_live_api.py#L1318)
+[Show source in test_live_api.py:1321](../../testing/test_live_api.py#L1321)
 
 Update transactions in the given budget using the test_pynab API.
 
@@ -1835,7 +1837,7 @@ def update_transactions(test_pynab, budget, create_transactions): ...
 
 ## user
 
-[Show source in test_live_api.py:54](../../testing/test_live_api.py#L54)
+[Show source in test_live_api.py:57](../../testing/test_live_api.py#L57)
 
 Fetches the user information from the API.
 

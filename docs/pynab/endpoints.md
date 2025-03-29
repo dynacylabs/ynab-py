@@ -1,5 +1,7 @@
 # Endpoints
 
+
+
 [Pynab Index](../README.md#pynab-index) / [Pynab](./index.md#pynab) / Endpoints
 
 > Auto-generated documentation for [pynab.endpoints](../../pynab/endpoints.py) module.
