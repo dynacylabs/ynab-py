@@ -101,7 +101,7 @@ class Api:
 
         response = self.endpoints.request_get_budget(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab._server_knowledges["get_budget"],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_budget"),
         )
         _json = response.json()
 
@@ -166,7 +166,7 @@ class Api:
 
         response = self.endpoints.request_get_accounts(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab._server_knowledges["get_accounts"],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_accounts"),
         )
         _json = response.json()
 
@@ -297,7 +297,7 @@ class Api:
 
         response = self.endpoints.request_get_categories(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab._server_knowledges["get_categories"],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_categories"),
         )
         _json = response.json()
 
@@ -785,7 +785,7 @@ class Api:
 
         response = self.endpoints.request_get_months(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab._server_knowledges["get_months"],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_months"),
         )
         _json = response.json()
 
@@ -876,7 +876,7 @@ class Api:
             budget_id=budget_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab._server_knowledges["get_transactions"],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_transactions"),
         )
         _json = response.json()
 
@@ -1235,9 +1235,7 @@ class Api:
             account_id=account_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab._server_knowledges[
-                "get_account_transactions"
-            ],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_account_transactions"),
         )
         _json = response.json()
 
@@ -1292,9 +1290,7 @@ class Api:
             category_id=category_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab._server_knowledges[
-                "get_category_transactions"
-            ],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_category_transactions"),
         )
         _json = response.json()
 
@@ -1348,9 +1344,7 @@ class Api:
             payee_id=payee_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab._server_knowledges[
-                "get_payee_transactions"
-            ],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_payee_transactions"),
         )
         _json = response.json()
 
@@ -1404,9 +1398,7 @@ class Api:
             month=month_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab._server_knowledges[
-                "get_month_transactions"
-            ],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_month_transactions"),
         )
         _json = response.json()
 
@@ -1449,9 +1441,7 @@ class Api:
 
         response = self.endpoints.request_get_scheduled_transactions(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab._server_knowledges[
-                "get_scheduled_transactions"
-            ],
+            last_knowledge_of_server=self.pynab.server_knowledges("get_scheduled_transactions"),
         )
         _json = response.json()
 
