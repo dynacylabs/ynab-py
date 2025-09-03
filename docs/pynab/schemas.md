@@ -1,5 +1,7 @@
 # Schemas
 
+
+
 [Pynab Index](../README.md#pynab-index) / [Pynab](./index.md#pynab) / Schemas
 
 > Auto-generated documentation for [pynab.schemas](../../pynab/schemas.py) module.
@@ -103,7 +105,7 @@
 
 ## Account
 
-[Show source in schemas.py:704](../../pynab/schemas.py#L704)
+[Show source in schemas.py:706](../../pynab/schemas.py#L706)
 
 #### Signature
 
@@ -118,7 +120,7 @@ class Account:
 
 ### Account().payee_locations
 
-[Show source in schemas.py:795](../../pynab/schemas.py#L795)
+[Show source in schemas.py:797](../../pynab/schemas.py#L797)
 
 Retrieves the locations associated with each payee.
 
@@ -135,7 +137,7 @@ def payee_locations(self): ...
 
 ### Account().payees
 
-[Show source in schemas.py:784](../../pynab/schemas.py#L784)
+[Show source in schemas.py:786](../../pynab/schemas.py#L786)
 
 Retrieve the payees associated with the budget.
 
@@ -152,7 +154,7 @@ def payees(self): ...
 
 ### Account().scheduled_transactions
 
-[Show source in schemas.py:820](../../pynab/schemas.py#L820)
+[Show source in schemas.py:822](../../pynab/schemas.py#L822)
 
 Retrieves the scheduled transactions associated with the account.
 
@@ -169,7 +171,7 @@ def scheduled_transactions(self): ...
 
 ### Account().transactions
 
-[Show source in schemas.py:808](../../pynab/schemas.py#L808)
+[Show source in schemas.py:810](../../pynab/schemas.py#L810)
 
 Retrieve transactions associated with the account.
 
@@ -186,7 +188,7 @@ def transactions(self): ...
 
 ### Account().transfer_payees
 
-[Show source in schemas.py:774](../../pynab/schemas.py#L774)
+[Show source in schemas.py:776](../../pynab/schemas.py#L776)
 
 Returns the payee associated with the transfer_payee_id.
 
@@ -388,7 +390,7 @@ def category_groups(self): ...
 
 ### Budget().detail
 
-[Show source in schemas.py:593](../../pynab/schemas.py#L593)
+[Show source in schemas.py:595](../../pynab/schemas.py#L595)
 
 Retrieves detailed information about the budget.
 
@@ -405,7 +407,7 @@ def detail(self): ...
 
 ### Budget().months
 
-[Show source in schemas.py:385](../../pynab/schemas.py#L385)
+[Show source in schemas.py:387](../../pynab/schemas.py#L387)
 
 Returns the months attribute.
 
@@ -422,7 +424,7 @@ def months(self): ...
 
 ### Budget().months
 
-[Show source in schemas.py:394](../../pynab/schemas.py#L394)
+[Show source in schemas.py:396](../../pynab/schemas.py#L396)
 
 Process the given JSON string and create Month objects for each month in the JSON.
 
@@ -443,7 +445,7 @@ def months(self, _json: str = ""): ...
 
 ### Budget().months
 
-[Show source in schemas.py:409](../../pynab/schemas.py#L409)
+[Show source in schemas.py:411](../../pynab/schemas.py#L411)
 
 Returns the months associated with the budget.
 
@@ -579,7 +581,7 @@ def payees(self): ...
 
 ### Budget().scheduled_subtransactions
 
-[Show source in schemas.py:549](../../pynab/schemas.py#L549)
+[Show source in schemas.py:551](../../pynab/schemas.py#L551)
 
 Returns the scheduled subtransactions.
 
@@ -596,7 +598,7 @@ def scheduled_subtransactions(self): ...
 
 ### Budget().scheduled_subtransactions
 
-[Show source in schemas.py:558](../../pynab/schemas.py#L558)
+[Show source in schemas.py:560](../../pynab/schemas.py#L560)
 
 Process the scheduled subtransactions from the given JSON string and store them in the `_scheduled_subtransactions` dictionary.
 
@@ -617,7 +619,7 @@ def scheduled_subtransactions(self, _json: str = ""): ...
 
 ### Budget().scheduled_subtransactions
 
-[Show source in schemas.py:577](../../pynab/schemas.py#L577)
+[Show source in schemas.py:579](../../pynab/schemas.py#L579)
 
 Retrieves the scheduled subtransactions for the budget.
 
@@ -637,7 +639,7 @@ def scheduled_subtransactions(self): ...
 
 ### Budget().scheduled_transactions
 
-[Show source in schemas.py:504](../../pynab/schemas.py#L504)
+[Show source in schemas.py:506](../../pynab/schemas.py#L506)
 
 Returns the scheduled transactions.
 
@@ -654,7 +656,7 @@ def scheduled_transactions(self): ...
 
 ### Budget().scheduled_transactions
 
-[Show source in schemas.py:513](../../pynab/schemas.py#L513)
+[Show source in schemas.py:515](../../pynab/schemas.py#L515)
 
 Adds scheduled transactions to the schema.
 
@@ -675,7 +677,7 @@ def scheduled_transactions(self, _json: str = ""): ...
 
 ### Budget().scheduled_transactions
 
-[Show source in schemas.py:532](../../pynab/schemas.py#L532)
+[Show source in schemas.py:534](../../pynab/schemas.py#L534)
 
 Retrieves the scheduled transactions for the budget.
 
@@ -695,7 +697,7 @@ def scheduled_transactions(self): ...
 
 ### Budget().settings
 
-[Show source in schemas.py:604](../../pynab/schemas.py#L604)
+[Show source in schemas.py:606](../../pynab/schemas.py#L606)
 
 Retrieves the budget settings from the Pynab API.
 
@@ -715,7 +717,7 @@ def settings(self): ...
 
 ### Budget().subtransactions
 
-[Show source in schemas.py:465](../../pynab/schemas.py#L465)
+[Show source in schemas.py:467](../../pynab/schemas.py#L467)
 
 Returns the subtransactions of the object.
 
@@ -732,7 +734,7 @@ def subtransactions(self): ...
 
 ### Budget().subtransactions
 
-[Show source in schemas.py:474](../../pynab/schemas.py#L474)
+[Show source in schemas.py:476](../../pynab/schemas.py#L476)
 
 Process the subtransactions from the given JSON string and store them in the `_subtransactions` dictionary.
 
@@ -753,7 +755,7 @@ def subtransactions(self, _json: str = ""): ...
 
 ### Budget().subtransactions
 
-[Show source in schemas.py:489](../../pynab/schemas.py#L489)
+[Show source in schemas.py:491](../../pynab/schemas.py#L491)
 
 Retrieves the subtransactions associated with the budget.
 
@@ -772,7 +774,7 @@ def subtransactions(self): ...
 
 ### Budget().transactions
 
-[Show source in schemas.py:423](../../pynab/schemas.py#L423)
+[Show source in schemas.py:425](../../pynab/schemas.py#L425)
 
 Returns the transactions associated with the object.
 
@@ -789,7 +791,7 @@ def transactions(self): ...
 
 ### Budget().transactions
 
-[Show source in schemas.py:432](../../pynab/schemas.py#L432)
+[Show source in schemas.py:434](../../pynab/schemas.py#L434)
 
 Process the given transactions and store them in the `_transactions` dictionary.
 
@@ -810,7 +812,7 @@ def transactions(self, _json: str = ""): ...
 
 ### Budget().transactions
 
-[Show source in schemas.py:448](../../pynab/schemas.py#L448)
+[Show source in schemas.py:450](../../pynab/schemas.py#L450)
 
 Retrieves the transactions associated with the budget.
 
@@ -833,7 +835,7 @@ def transactions(self): ...
 
 ## BudgetSettings
 
-[Show source in schemas.py:621](../../pynab/schemas.py#L621)
+[Show source in schemas.py:623](../../pynab/schemas.py#L623)
 
 #### Signature
 
@@ -850,7 +852,7 @@ class BudgetSettings:
 
 ## Category
 
-[Show source in schemas.py:1094](../../pynab/schemas.py#L1094)
+[Show source in schemas.py:1096](../../pynab/schemas.py#L1096)
 
 #### Signature
 
@@ -865,7 +867,7 @@ class Category:
 
 ### Category().category_group
 
-[Show source in schemas.py:1171](../../pynab/schemas.py#L1171)
+[Show source in schemas.py:1173](../../pynab/schemas.py#L1173)
 
 Returns the category group associated with the current budget category.
 
@@ -882,7 +884,7 @@ def category_group(self): ...
 
 ### Category().original_category_group
 
-[Show source in schemas.py:1181](../../pynab/schemas.py#L1181)
+[Show source in schemas.py:1183](../../pynab/schemas.py#L1183)
 
 Returns the original category group associated with the transaction.
 
@@ -899,7 +901,7 @@ def original_category_group(self): ...
 
 ### Category().scheduled_subtransactions
 
-[Show source in schemas.py:1227](../../pynab/schemas.py#L1227)
+[Show source in schemas.py:1229](../../pynab/schemas.py#L1229)
 
 Retrieves the scheduled subtransactions associated with the category.
 
@@ -916,7 +918,7 @@ def scheduled_subtransactions(self): ...
 
 ### Category().scheduled_transactions
 
-[Show source in schemas.py:1215](../../pynab/schemas.py#L1215)
+[Show source in schemas.py:1217](../../pynab/schemas.py#L1217)
 
 Retrieves the scheduled transactions associated with the category.
 
@@ -933,7 +935,7 @@ def scheduled_transactions(self): ...
 
 ### Category().subtransactions
 
-[Show source in schemas.py:1203](../../pynab/schemas.py#L1203)
+[Show source in schemas.py:1205](../../pynab/schemas.py#L1205)
 
 Retrieves the subtransactions associated with the current category.
 
@@ -950,7 +952,7 @@ def subtransactions(self): ...
 
 ### Category().transactions
 
-[Show source in schemas.py:1191](../../pynab/schemas.py#L1191)
+[Show source in schemas.py:1193](../../pynab/schemas.py#L1193)
 
 Retrieve transactions associated with the category.
 
@@ -969,7 +971,7 @@ def transactions(self): ...
 
 ## CategoryGroup
 
-[Show source in schemas.py:1063](../../pynab/schemas.py#L1063)
+[Show source in schemas.py:1065](../../pynab/schemas.py#L1065)
 
 #### Signature
 
@@ -986,7 +988,7 @@ class CategoryGroup:
 
 ## CurrencyFormat
 
-[Show source in schemas.py:667](../../pynab/schemas.py#L667)
+[Show source in schemas.py:669](../../pynab/schemas.py#L669)
 
 #### Signature
 
@@ -1003,7 +1005,7 @@ class CurrencyFormat:
 
 ## DateFormat
 
-[Show source in schemas.py:647](../../pynab/schemas.py#L647)
+[Show source in schemas.py:649](../../pynab/schemas.py#L649)
 
 #### Signature
 
@@ -1020,7 +1022,7 @@ class DateFormat:
 
 ## DebtEscrowAmounts
 
-[Show source in schemas.py:895](../../pynab/schemas.py#L895)
+[Show source in schemas.py:897](../../pynab/schemas.py#L897)
 
 #### Signature
 
@@ -1044,7 +1046,7 @@ class DebtEscrowAmounts:
 
 ## DebtInterestRates
 
-[Show source in schemas.py:833](../../pynab/schemas.py#L833)
+[Show source in schemas.py:835](../../pynab/schemas.py#L835)
 
 #### Signature
 
@@ -1068,7 +1070,7 @@ class DebtInterestRates:
 
 ## DebtMinimumPayments
 
-[Show source in schemas.py:864](../../pynab/schemas.py#L864)
+[Show source in schemas.py:866](../../pynab/schemas.py#L866)
 
 #### Signature
 
@@ -1121,7 +1123,7 @@ def __str__(self): ...
 
 ## Month
 
-[Show source in schemas.py:1240](../../pynab/schemas.py#L1240)
+[Show source in schemas.py:1242](../../pynab/schemas.py#L1242)
 
 #### Signature
 
@@ -1138,7 +1140,7 @@ class Month:
 
 ## Payee
 
-[Show source in schemas.py:926](../../pynab/schemas.py#L926)
+[Show source in schemas.py:928](../../pynab/schemas.py#L928)
 
 #### Signature
 
@@ -1153,7 +1155,7 @@ class Payee:
 
 ### Payee().payee_locations
 
-[Show source in schemas.py:976](../../pynab/schemas.py#L976)
+[Show source in schemas.py:978](../../pynab/schemas.py#L978)
 
 Retrieves the payee locations associated with the current payee.
 
@@ -1170,7 +1172,7 @@ def payee_locations(self): ...
 
 ### Payee().scheduled_subtransactions
 
-[Show source in schemas.py:1012](../../pynab/schemas.py#L1012)
+[Show source in schemas.py:1014](../../pynab/schemas.py#L1014)
 
 Retrieves the scheduled subtransactions associated with the current payee.
 
@@ -1186,7 +1188,7 @@ def scheduled_subtransactions(self): ...
 
 ### Payee().scheduled_transactions
 
-[Show source in schemas.py:989](../../pynab/schemas.py#L989)
+[Show source in schemas.py:991](../../pynab/schemas.py#L991)
 
 Retrieve all scheduled transactions associated with the payee.
 
@@ -1203,7 +1205,7 @@ def scheduled_transactions(self): ...
 
 ### Payee().subtransactions
 
-[Show source in schemas.py:1001](../../pynab/schemas.py#L1001)
+[Show source in schemas.py:1003](../../pynab/schemas.py#L1003)
 
 Retrieves subtransactions associated with the current budget.
 
@@ -1219,7 +1221,7 @@ def subtransactions(self): ...
 
 ### Payee().transactions
 
-[Show source in schemas.py:966](../../pynab/schemas.py#L966)
+[Show source in schemas.py:968](../../pynab/schemas.py#L968)
 
 Retrieve transactions associated with the payee.
 
@@ -1236,7 +1238,7 @@ def transactions(self): ...
 
 ### Payee().transfer_account
 
-[Show source in schemas.py:956](../../pynab/schemas.py#L956)
+[Show source in schemas.py:958](../../pynab/schemas.py#L958)
 
 Retrieves the account associated with the transfer_account_id.
 
@@ -1255,7 +1257,7 @@ def transfer_account(self): ...
 
 ## PayeeLocation
 
-[Show source in schemas.py:1025](../../pynab/schemas.py#L1025)
+[Show source in schemas.py:1027](../../pynab/schemas.py#L1027)
 
 #### Signature
 
@@ -1270,7 +1272,7 @@ class PayeeLocation:
 
 ### PayeeLocation().payee
 
-[Show source in schemas.py:1052](../../pynab/schemas.py#L1052)
+[Show source in schemas.py:1054](../../pynab/schemas.py#L1054)
 
 Returns the payee associated with the transaction.
 
@@ -1289,7 +1291,7 @@ def payee(self): ...
 
 ## ScheduledSubTransaction
 
-[Show source in schemas.py:1694](../../pynab/schemas.py#L1694)
+[Show source in schemas.py:1698](../../pynab/schemas.py#L1698)
 
 #### Signature
 
@@ -1300,7 +1302,7 @@ class ScheduledSubTransaction:
 
 ### ScheduledSubTransaction().category
 
-[Show source in schemas.py:1744](../../pynab/schemas.py#L1744)
+[Show source in schemas.py:1748](../../pynab/schemas.py#L1748)
 
 Returns the category associated with the current instance.
 
@@ -1317,7 +1319,7 @@ def category(self): ...
 
 ### ScheduledSubTransaction().payee
 
-[Show source in schemas.py:1737](../../pynab/schemas.py#L1737)
+[Show source in schemas.py:1741](../../pynab/schemas.py#L1741)
 
 Returns the payee associated with the transaction.
 
@@ -1330,7 +1332,7 @@ def payee(self): ...
 
 ### ScheduledSubTransaction().scheduled_transaction
 
-[Show source in schemas.py:1727](../../pynab/schemas.py#L1727)
+[Show source in schemas.py:1731](../../pynab/schemas.py#L1731)
 
 Returns the scheduled transaction associated with the current instance.
 
@@ -1347,7 +1349,7 @@ def scheduled_transaction(self): ...
 
 ### ScheduledSubTransaction().transfer_account
 
-[Show source in schemas.py:1754](../../pynab/schemas.py#L1754)
+[Show source in schemas.py:1758](../../pynab/schemas.py#L1758)
 
 Returns the account associated with the transfer_account_id.
 
@@ -1366,7 +1368,7 @@ def transfer_account(self): ...
 
 ## ScheduledTransaction
 
-[Show source in schemas.py:1557](../../pynab/schemas.py#L1557)
+[Show source in schemas.py:1559](../../pynab/schemas.py#L1559)
 
 #### Signature
 
@@ -1381,7 +1383,7 @@ class ScheduledTransaction:
 
 ### ScheduledTransaction().account
 
-[Show source in schemas.py:1656](../../pynab/schemas.py#L1656)
+[Show source in schemas.py:1660](../../pynab/schemas.py#L1660)
 
 Returns the account associated with the current instance.
 
@@ -1394,7 +1396,7 @@ def account(self): ...
 
 ### ScheduledTransaction().category
 
-[Show source in schemas.py:1673](../../pynab/schemas.py#L1673)
+[Show source in schemas.py:1677](../../pynab/schemas.py#L1677)
 
 Returns the category associated with the current instance.
 
@@ -1411,7 +1413,7 @@ def category(self): ...
 
 ### ScheduledTransaction().payee
 
-[Show source in schemas.py:1663](../../pynab/schemas.py#L1663)
+[Show source in schemas.py:1667](../../pynab/schemas.py#L1667)
 
 Returns the payee associated with the transaction.
 
@@ -1428,7 +1430,7 @@ def payee(self): ...
 
 ### ScheduledTransaction().to_dict
 
-[Show source in schemas.py:1618](../../pynab/schemas.py#L1618)
+[Show source in schemas.py:1620](../../pynab/schemas.py#L1620)
 
 Converts the object to a dictionary representation.
 
@@ -1444,7 +1446,7 @@ def to_dict(self): ...
 
 ### ScheduledTransaction().to_json
 
-[Show source in schemas.py:1644](../../pynab/schemas.py#L1644)
+[Show source in schemas.py:1648](../../pynab/schemas.py#L1648)
 
 Convert the object to a JSON string representation.
 
@@ -1464,7 +1466,7 @@ def to_json(self, indent: int = 4): ...
 
 ### ScheduledTransaction().transfer_account
 
-[Show source in schemas.py:1683](../../pynab/schemas.py#L1683)
+[Show source in schemas.py:1687](../../pynab/schemas.py#L1687)
 
 Returns the account associated with the transfer_account_id.
 
@@ -1483,7 +1485,7 @@ def transfer_account(self): ...
 
 ## SubTransaction
 
-[Show source in schemas.py:1466](../../pynab/schemas.py#L1466)
+[Show source in schemas.py:1468](../../pynab/schemas.py#L1468)
 
 #### Signature
 
@@ -1498,7 +1500,7 @@ class SubTransaction:
 
 ### SubTransaction().category
 
-[Show source in schemas.py:1526](../../pynab/schemas.py#L1526)
+[Show source in schemas.py:1528](../../pynab/schemas.py#L1528)
 
 Returns the category associated with the current instance.
 
@@ -1515,7 +1517,7 @@ def category(self): ...
 
 ### SubTransaction().payee
 
-[Show source in schemas.py:1516](../../pynab/schemas.py#L1516)
+[Show source in schemas.py:1518](../../pynab/schemas.py#L1518)
 
 Returns the payee associated with the transaction.
 
@@ -1532,7 +1534,7 @@ def payee(self): ...
 
 ### SubTransaction().transaction
 
-[Show source in schemas.py:1507](../../pynab/schemas.py#L1507)
+[Show source in schemas.py:1509](../../pynab/schemas.py#L1509)
 
 Returns the transaction associated with the current transaction_id.
 
@@ -1548,7 +1550,7 @@ def transaction(self): ...
 
 ### SubTransaction().transfer_account
 
-[Show source in schemas.py:1536](../../pynab/schemas.py#L1536)
+[Show source in schemas.py:1538](../../pynab/schemas.py#L1538)
 
 Retrieves the account associated with the transfer_account_id.
 
@@ -1565,7 +1567,7 @@ def transfer_account(self): ...
 
 ### SubTransaction().transfer_transaction
 
-[Show source in schemas.py:1546](../../pynab/schemas.py#L1546)
+[Show source in schemas.py:1548](../../pynab/schemas.py#L1548)
 
 Retrieves the transfer transaction associated with the current instance.
 
@@ -1584,7 +1586,7 @@ def transfer_transaction(self): ...
 
 ## Transaction
 
-[Show source in schemas.py:1281](../../pynab/schemas.py#L1281)
+[Show source in schemas.py:1283](../../pynab/schemas.py#L1283)
 
 #### Signature
 
@@ -1599,7 +1601,7 @@ class Transaction:
 
 ### Transaction().account
 
-[Show source in schemas.py:1406](../../pynab/schemas.py#L1406)
+[Show source in schemas.py:1408](../../pynab/schemas.py#L1408)
 
 Returns the account associated with the current instance.
 
@@ -1612,7 +1614,7 @@ def account(self): ...
 
 ### Transaction().categories
 
-[Show source in schemas.py:1423](../../pynab/schemas.py#L1423)
+[Show source in schemas.py:1425](../../pynab/schemas.py#L1425)
 
 Retrieve the categories associated with the budget.
 
@@ -1629,7 +1631,7 @@ def categories(self): ...
 
 ### Transaction().matched_transaction
 
-[Show source in schemas.py:1455](../../pynab/schemas.py#L1455)
+[Show source in schemas.py:1457](../../pynab/schemas.py#L1457)
 
 Returns the matched transaction based on the `matched_transaction_id`.
 
@@ -1646,7 +1648,7 @@ def matched_transaction(self): ...
 
 ### Transaction().payee
 
-[Show source in schemas.py:1413](../../pynab/schemas.py#L1413)
+[Show source in schemas.py:1415](../../pynab/schemas.py#L1415)
 
 Returns the payee associated with the transaction.
 
@@ -1663,7 +1665,7 @@ def payee(self): ...
 
 ### Transaction().to_dict
 
-[Show source in schemas.py:1359](../../pynab/schemas.py#L1359)
+[Show source in schemas.py:1361](../../pynab/schemas.py#L1361)
 
 Converts the object to a dictionary representation.
 
@@ -1679,7 +1681,7 @@ def to_dict(self): ...
 
 ### Transaction().to_json
 
-[Show source in schemas.py:1394](../../pynab/schemas.py#L1394)
+[Show source in schemas.py:1396](../../pynab/schemas.py#L1396)
 
 Convert the object to a JSON string representation.
 
@@ -1699,7 +1701,7 @@ def to_json(self, indent: int = 4): ...
 
 ### Transaction().transfer_account
 
-[Show source in schemas.py:1435](../../pynab/schemas.py#L1435)
+[Show source in schemas.py:1437](../../pynab/schemas.py#L1437)
 
 Returns the account associated with the transfer_account_id.
 
@@ -1716,7 +1718,7 @@ def transfer_account(self): ...
 
 ### Transaction().transfer_transaction
 
-[Show source in schemas.py:1445](../../pynab/schemas.py#L1445)
+[Show source in schemas.py:1447](../../pynab/schemas.py#L1447)
 
 Returns the transfer transaction associated with the current instance.
 

@@ -1,5 +1,7 @@
 # Enums
 
+
+
 [Pynab Index](../README.md#pynab-index) / [Pynab](./index.md#pynab) / Enums
 
 > Auto-generated documentation for [pynab.enums](../../pynab/enums.py) module.
