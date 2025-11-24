@@ -1,0 +1,47 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Check for dependency updates every Monday at 9am UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  update-dependencies:
+    name: Check and Update Dependencies
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    
+    - name: Install pip-tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install pip-tools pip-audit
+    
+    - name: Check for outdated packages
+      run: |
+        pip install -r requirements.txt
+        pip list --outdated
+    
+    - name: Audit dependencies for vulnerabilities
+      run: |
+        pip-audit -r requirements.txt --desc
+      continue-on-error: true
+    
+    - name: Create issue if vulnerabilities found
+      if: failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: '🔒 Security: Vulnerable dependencies detected',
+            body: 'pip-audit found vulnerabilities in dependencies. Please review and update.\n\nRun `pip-audit -r requirements.txt` locally for details.',
+            labels: ['security', 'dependencies']
+          })

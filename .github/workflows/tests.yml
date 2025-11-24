@@ -1,0 +1,93 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    # Run tests daily at 2am UTC to catch dependency issues
+    - cron: '0 2 * * *'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        pip install -r requirements.txt
+    
+    - name: Run tests with coverage
+      run: |
+        pytest tests/ -v --cov=ynab_py --cov-report=term-missing --cov-report=xml --cov-report=html
+    
+    - name: Check coverage threshold
+      run: |
+        coverage report --fail-under=95
+      continue-on-error: true
+    
+    - name: Upload coverage reports
+      if: matrix.python-version == '3.12'
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+      continue-on-error: true
+    
+    - name: Upload coverage HTML
+      if: matrix.python-version == '3.12' && always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: htmlcov/
+        retention-days: 30
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install ruff mypy black
+        pip install -e .
+    
+    - name: Check code formatting with Black
+      run: |
+        black --check ynab_py/ tests/
+      continue-on-error: true
+    
+    - name: Lint with ruff
+      run: |
+        ruff check ynab_py/ tests/ --output-format=github
+      continue-on-error: true
+    
+    - name: Type check with mypy
+      run: |
+        mypy ynab_py/ --ignore-missing-imports
+      continue-on-error: true

@@ -1,4 +1,8 @@
 include README.md
 include LICENSE.md
 include requirements.txt
+include INSTALL.md
+include USAGE.md
+include CONTRIBUTING.md
+include DEVELOPMENT.md
 recursive-include ynab_py *.py

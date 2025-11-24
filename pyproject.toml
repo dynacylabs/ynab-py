@@ -1,36 +1,52 @@
 [build-system]
-requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "ynab-py"
-version = "1.0.0"
+dynamic = ["version"]
 description = "A Python client for the You Need A Budget (YNAB) API"
 readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
 authors = [
     {name = "Austin Conn", email = "austinc@dynacylabs.com"}
 ]
-license = {text = "MIT"}
+keywords = ["ynab", "budget", "api", "finance", "personal-finance"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-keywords = ["ynab", "budget", "api", "finance", "personal-finance"]
-requires-python = ">=3.6"
 dependencies = [
-    "requests",
-    "python-dateutil",
+    "requests>=2.28.0",
+    "python-dateutil>=2.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.10.0",
+    "responses>=0.22.0",
+    "coverage>=7.0.0",
+    "black>=22.0.0",
+    "ruff>=0.1.0",
+    "mypy>=0.950",
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.10.0",
+    "responses>=0.22.0",
+    "coverage>=7.0.0",
 ]
 
 [project.urls]
@@ -39,5 +55,34 @@ Documentation = "https://github.com/dynacylabs/ynab-py#readme"
 Repository = "https://github.com/dynacylabs/ynab-py"
 Issues = "https://github.com/dynacylabs/ynab-py/issues"
 
-[tool.setuptools]
-packages = ["ynab_py"]
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=ynab_py --cov-report=term-missing --strict-markers --tb=short"
+markers = [
+    "unit: Unit tests with mocked dependencies",
+    "integration: Integration tests that hit real external services",
+    "slow: Tests that are slow to run",
+]
+
+[tool.coverage.run]
+omit = [
+    "ynab_py/_version.py",
+]
+
+[tool.setuptools_scm]
+write_to = "ynab_py/_version.py"
