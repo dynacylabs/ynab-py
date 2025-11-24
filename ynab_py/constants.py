@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 """
-This module contains constants used in the pynab package.
+This module contains constants used in the ynab_py package.
 
 Attributes:
     EPOCH (str): The string representation of the UTC datetime for the epoch (January 1, 1970).

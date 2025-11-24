@@ -1,3 +1,0 @@
-[run]
-omit =
-    tests/test_live_api.py

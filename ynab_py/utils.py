@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from enum import Enum
-from pynab import pynab
+from ynab_py.ynab_py import YnabPy
 
 import json
 import requests
@@ -8,14 +8,14 @@ import logging
 
 
 class http_utils:
-    def __init__(self, pynab: pynab = None):
+    def __init__(self, ynab_py: YnabPy = None):
         """
         Initializes an instance of the class.
 
         Args:
-            pynab (pynab, optional): The pynab object. Defaults to None.
+            ynab_py (YnabPy, optional): The YnabPy object. Defaults to None.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
 
     def get(self, endpoint: str = None):
         """
@@ -27,15 +27,15 @@ class http_utils:
         Returns:
             Response: The response object returned by the GET request.
         """
-        url = f"{self.pynab.api_url}{endpoint}"
+        url = f"{self.ynab_py.api_url}{endpoint}"
         logging.debug(f"GET {url}")
-        response = requests.get(url, headers=self.pynab._headers)
+        response = requests.get(url, headers=self.ynab_py._headers)
         if "x-rate-limit" in response.headers:
-            self.pynab._requests_remaining = int(
+            self.ynab_py._requests_remaining = int(
                 response.headers["x-rate-limit"].split("/")[1]
             ) - int(response.headers["x-rate-limit"].split("/")[0])
         else:
-            self.pynab._requests_remaining -= 1
+            self.ynab_py._requests_remaining -= 1
         return response
 
     def post(self, endpoint: str = None, json: dict = {}):
@@ -49,15 +49,15 @@ class http_utils:
         Returns:
             Response: The response object received from the server.
         """
-        url = f"{self.pynab.api_url}{endpoint}"
+        url = f"{self.ynab_py.api_url}{endpoint}"
         logging.debug(f"POST {url}\n{json}")
-        response = requests.post(url, json=json, headers=self.pynab._headers)
+        response = requests.post(url, json=json, headers=self.ynab_py._headers)
         if "x-rate-limit" in response.headers:
-            self.pynab._requests_remaining = int(
+            self.ynab_py._requests_remaining = int(
                 response.headers["x-rate-limit"].split("/")[1]
             ) - int(response.headers["x-rate-limit"].split("/")[0])
         else:
-            self.pynab._requests_remaining -= 1
+            self.ynab_py._requests_remaining -= 1
         return response
 
     def patch(self, endpoint: str = None, json: dict = {}):
@@ -71,15 +71,15 @@ class http_utils:
         Returns:
             Response: The response object returned by the PATCH request.
         """
-        url = f"{self.pynab.api_url}{endpoint}"
+        url = f"{self.ynab_py.api_url}{endpoint}"
         logging.debug(f"PATCH {url}\n{json}")
-        response = requests.patch(url, json=json, headers=self.pynab._headers)
+        response = requests.patch(url, json=json, headers=self.ynab_py._headers)
         if "x-rate-limit" in response.headers:
-            self.pynab._requests_remaining = int(
+            self.ynab_py._requests_remaining = int(
                 response.headers["x-rate-limit"].split("/")[1]
             ) - int(response.headers["x-rate-limit"].split("/")[0])
         else:
-            self.pynab._requests_remaining -= 1
+            self.ynab_py._requests_remaining -= 1
         return response
 
     def put(self, endpoint: str = None, json: dict = {}):
@@ -93,15 +93,15 @@ class http_utils:
         Returns:
             Response: The response object returned by the server.
         """
-        url = f"{self.pynab.api_url}{endpoint}"
+        url = f"{self.ynab_py.api_url}{endpoint}"
         logging.debug(f"PUT {url}\n{json}")
-        response = requests.put(url, json=json, headers=self.pynab._headers)
+        response = requests.put(url, json=json, headers=self.ynab_py._headers)
         if "x-rate-limit" in response.headers:
-            self.pynab._requests_remaining = int(
+            self.ynab_py._requests_remaining = int(
                 response.headers["x-rate-limit"].split("/")[1]
             ) - int(response.headers["x-rate-limit"].split("/")[0])
         else:
-            self.pynab._requests_remaining -= 1
+            self.ynab_py._requests_remaining -= 1
         return response
 
     def delete(self, endpoint: str = None):
@@ -114,15 +114,15 @@ class http_utils:
         Returns:
             requests.Response: The response object returned by the DELETE request.
         """
-        url = f"{self.pynab.api_url}{endpoint}"
+        url = f"{self.ynab_py.api_url}{endpoint}"
         logging.info(f"DELETE {url}\n{json}")
-        response = requests.delete(url, headers=self.pynab._headers)
+        response = requests.delete(url, headers=self.ynab_py._headers)
         if "x-rate-limit" in response.headers:
-            self.pynab._requests_remaining = int(
+            self.ynab_py._requests_remaining = int(
                 response.headers["x-rate-limit"].split("/")[1]
             ) - int(response.headers["x-rate-limit"].split("/")[0])
         else:
-            self.pynab._requests_remaining -= 1
+            self.ynab_py._requests_remaining -= 1
         return response
 
 

@@ -1,11 +1,11 @@
-from pynab.api import Api
-from pynab import constants
+from ynab_py.api import Api
+from ynab_py import constants
 
 
-class Pynab:
+class YnabPy:
     def __init__(self, bearer: str = None):
         """
-        Initializes a new instance of the `pynab` class.
+        Initializes a new instance of the `ynab_py` class.
 
         Args:
             bearer (str, optional): The bearer token for authentication. Defaults to None.
@@ -35,7 +35,7 @@ class Pynab:
             "get_scheduled_transactions": 0,
         }
 
-        self.api = Api(pynab=self)
+        self.api = Api(ynab_py=self)
 
     def server_knowledges(self, endpoint: str = None):
         """

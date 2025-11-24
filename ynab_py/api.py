@@ -1,23 +1,23 @@
-import pynab.schemas as schemas
-from pynab.endpoints import Endpoints
-import pynab.enums as enums
+import ynab_py.schemas as schemas
+from ynab_py.endpoints import Endpoints
+import ynab_py.enums as enums
 from datetime import datetime
-import pynab.utils as utils
+import ynab_py.utils as utils
 
 
 class Api:
-    def __init__(self, pynab=None):
+    def __init__(self, ynab_py=None):
         """
         Initializes an instance of the API class.
 
         Parameters:
-        - pynab (object): An instance of the Pynab class.
+        - ynab_py (object): An instance of the YnabPy class.
 
         Returns:
         - None
         """
-        self.pynab = pynab
-        self.endpoints = Endpoints(pynab=self.pynab)
+        self.ynab_py = ynab_py
+        self.endpoints = Endpoints(ynab_py=self.ynab_py)
 
     def get_user(self):
         """
@@ -34,10 +34,10 @@ class Api:
 
         if response.status_code == 200:
             user_json = _json.get("data", {}).get("user", {})
-            return schemas.User(pynab=self.pynab, _json=user_json)
+            return schemas.User(ynab_py=self.ynab_py, _json=user_json)
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_budgets(self, include_accounts: bool = False):
         """
@@ -61,13 +61,13 @@ class Api:
 
             budgets = utils._dict()
             for budget_json in data_json.get("budgets", []):
-                budget = schemas.Budget(pynab=self.pynab, _json=budget_json)
+                budget = schemas.Budget(ynab_py=self.ynab_py, _json=budget_json)
                 budgets[budget.id] = budget
 
             if data_json.get("default_budget", []) is not None:
                 for default_budget_json in data_json.get("default_budget", []):
                     default_budget = schemas.Budget(
-                        pynab=self.pynab, _json=default_budget_json
+                        ynab_py=self.ynab_py, _json=default_budget_json
                     )
                     for budget in budgets:
                         if budget.id == default_budget.id:
@@ -77,7 +77,7 @@ class Api:
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_budget(
         self,
@@ -101,19 +101,19 @@ class Api:
 
         response = self.endpoints.request_get_budget(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_budget"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_budget"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_budget"] = data_json.get(
+            self.ynab_py._server_knowledges["get_budget"] = data_json.get(
                 "server_knowledge", 0
             )
-            return schemas.Budget(pynab=self.pynab, _json=data_json.get("budget", {}))
+            return schemas.Budget(ynab_py=self.ynab_py, _json=data_json.get("budget", {}))
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_budget_settings(
         self, budget: schemas.Budget = None, budget_id: str = "last-used"
@@ -139,10 +139,10 @@ class Api:
 
         if response.status_code == 200:
             settings_json = _json.get("data", {}).get("settings", {})
-            return schemas.BudgetSettings(pynab=self.pynab, _json=settings_json)
+            return schemas.BudgetSettings(ynab_py=self.ynab_py, _json=settings_json)
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_accounts(
         self,
@@ -166,25 +166,25 @@ class Api:
 
         response = self.endpoints.request_get_accounts(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_accounts"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_accounts"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_accounts"] = data_json.get(
+            self.ynab_py._server_knowledges["get_accounts"] = data_json.get(
                 "server_knowledge", 0
             )
             accounts = utils._dict()
             for account_json in data_json.get("accounts", []):
                 account = schemas.Account(
-                    pynab=self.pynab, budget=budget, _json=account_json
+                    ynab_py=self.ynab_py, budget=budget, _json=account_json
                 )
                 accounts[account.id] = account
             return accounts
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def create_account(
         self,
@@ -228,14 +228,14 @@ class Api:
         if response.status_code == 201:
             data_json = _json.get("data", {})
             account = schemas.Account(
-                pynab=self.pynab, budget=budget, _json=data_json.get("account", {})
+                ynab_py=self.ynab_py, budget=budget, _json=data_json.get("account", {})
             )
             budget.accounts[account.id] = account
             return account
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_account(
         self,
@@ -269,10 +269,10 @@ class Api:
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            return schemas.Account(pynab=self.pynab, _json=data_json.get("account", {}))
+            return schemas.Account(ynab_py=self.ynab_py, _json=data_json.get("account", {}))
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_categories(
         self,
@@ -297,26 +297,26 @@ class Api:
 
         response = self.endpoints.request_get_categories(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_categories"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_categories"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_categories"] = data_json.get(
+            self.ynab_py._server_knowledges["get_categories"] = data_json.get(
                 "server_knowledge", 0
             )
             category_groups = utils._dict()
             for category_group in data_json.get("category_groups", []):
                 category_group = schemas.CategoryGroup(
-                    pynab=self.pynab, budget=budget, _json=category_group
+                    ynab_py=self.ynab_py, budget=budget, _json=category_group
                 )
                 category_groups[category_group.id] = category_group
             return category_groups
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_category(
         self,
@@ -351,13 +351,13 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             category = schemas.Category(
-                pynab=self.pynab, budget=budget, _json=data_json.get("category", [])
+                ynab_py=self.ynab_py, budget=budget, _json=data_json.get("category", [])
             )
             return category
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def update_category(
         self,
@@ -410,13 +410,13 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             category = schemas.Category(
-                pynab=self.pynab, budget=budget, _json=data_json
+                ynab_py=self.ynab_py, budget=budget, _json=data_json
             )
             return category
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_category_for_month(
         self,
@@ -453,13 +453,13 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             category = schemas.Category(
-                pynab=self.pynab, budget=budget, _json=data_json.get("category", [])
+                ynab_py=self.ynab_py, budget=budget, _json=data_json.get("category", [])
             )
             return category
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def update_category_for_month(
         self,
@@ -505,7 +505,7 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             category = schemas.Category(
-                pynab=self.pynab, budget=budget, _json=data_json.get("category", [])
+                ynab_py=self.ynab_py, budget=budget, _json=data_json.get("category", [])
             )
             budget.category_groups[category.category_group_id].categories[
                 category.id
@@ -516,7 +516,7 @@ class Api:
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_payees(
         self,
@@ -548,12 +548,12 @@ class Api:
             data_json = _json.get("data", {})
             payees = utils._dict()
             for payee in data_json.get("payees", []):
-                payee = schemas.Payee(pynab=self.pynab, budget=budget, _json=payee)
+                payee = schemas.Payee(ynab_py=self.ynab_py, budget=budget, _json=payee)
                 payees[payee.id] = payee
             return payees
 
         else:
-            return schemas.Error(pynab=self.pynab, _json=_json.get("error", {}))
+            return schemas.Error(ynab_py=self.ynab_py, _json=_json.get("error", {}))
 
     def get_payee(
         self,
@@ -587,13 +587,13 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             payee = schemas.Payee(
-                pynab=self.pynab, budget=budget, _json=data_json.get("payee", [])
+                ynab_py=self.ynab_py, budget=budget, _json=data_json.get("payee", [])
             )
             return payee
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def update_payee(
         self,
@@ -631,7 +631,7 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             payee = schemas.Payee(
-                pynab=self.pynab, budget=budget, _json=data_json.get("payee", [])
+                ynab_py=self.ynab_py, budget=budget, _json=data_json.get("payee", [])
             )
             budget.payees[payee.id] = payee
 
@@ -639,7 +639,7 @@ class Api:
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_budget_payee_locations(
         self, budget: schemas.Budget = None, budget_id: str = "last-used"
@@ -667,14 +667,14 @@ class Api:
             payee_locations = utils._dict()
             for payee_location in data_json.get("payee_locations", []):
                 payee_location = schemas.PayeeLocation(
-                    pynab=self.pynab, budget=budget, _json=payee_location
+                    ynab_py=self.ynab_py, budget=budget, _json=payee_location
                 )
                 payee_locations[payee_location.id] = payee_location
             return payee_locations
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_payee_location(
         self,
@@ -709,7 +709,7 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             payee_location = schemas.PayeeLocation(
-                pynab=self.pynab,
+                ynab_py=self.ynab_py,
                 budget=budget,
                 _json=data_json.get("payee_location", []),
             )
@@ -717,7 +717,7 @@ class Api:
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_payee_locations(
         self,
@@ -754,14 +754,14 @@ class Api:
             payee_locations = utils._dict()
             for payee_location in data_json.get("payee_locations", []):
                 payee_location = schemas.PayeeLocation(
-                    pynab=self.pynab, budget=budget, _json=payee_location
+                    ynab_py=self.ynab_py, budget=budget, _json=payee_location
                 )
                 payee_locations[payee_location.id] = payee_location
             return payee_locations
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_months(
         self,
@@ -785,18 +785,18 @@ class Api:
 
         response = self.endpoints.request_get_months(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_months"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_months"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_months"] = data_json.get(
+            self.ynab_py._server_knowledges["get_months"] = data_json.get(
                 "server_knowledge", 0
             )
             months = utils._dict()
             for month in data_json.get("months", []):
-                month = schemas.Month(pynab=self.pynab, budget=budget, _json=month)
+                month = schemas.Month(ynab_py=self.ynab_py, budget=budget, _json=month)
                 month.month = datetime.fromisoformat(str(month.month))
                 year = month.month.strftime("%Y")
                 month_name = month.month.strftime("%B")
@@ -805,7 +805,7 @@ class Api:
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_month(
         self,
@@ -840,13 +840,13 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             month = schemas.Month(
-                pynab=self.pynab, budget=budget, _json=data_json.get("month", {})
+                ynab_py=self.ynab_py, budget=budget, _json=data_json.get("month", {})
             )
             return month
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_transactions(
         self,
@@ -876,26 +876,26 @@ class Api:
             budget_id=budget_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_transactions"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_transactions"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_transactions"] = data_json.get(
+            self.ynab_py._server_knowledges["get_transactions"] = data_json.get(
                 "server_knowledge", 0
             )
             transactions = utils._dict()
             for transaction in data_json.get("transactions", []):
                 transaction = schemas.Transaction(
-                    pynab=self.pynab, budget=budget, _json=transaction
+                    ynab_py=self.ynab_py, budget=budget, _json=transaction
                 )
                 transactions[transaction.id] = transaction
             return transactions
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def create_transactions(
         self,
@@ -979,7 +979,7 @@ class Api:
 
             if "transaction" in data_json:
                 ret_val["transaction"] = schemas.Transaction(
-                    pynab=self.pynab,
+                    ynab_py=self.ynab_py,
                     budget=budget,
                     _json=data_json.get("transaction", {}),
                 )
@@ -987,14 +987,14 @@ class Api:
                 transactions = []
                 for transaction in data_json.get("transactions", []):
                     transaction = schemas.Transaction(
-                        pynab=self.pynab, budget=budget, _json=transaction
+                        ynab_py=self.ynab_py, budget=budget, _json=transaction
                     )
                     transactions.append(transaction)
                 return transactions
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def update_transactions(
         self,
@@ -1038,14 +1038,14 @@ class Api:
 
             if "transaction" in data_json:
                 ret_val["transaction"] = schemas.Transaction(
-                    pynab=self.pynab,
+                    ynab_py=self.ynab_py,
                     budget=budget,
                     _json=data_json.get("transaction", {}),
                 )
             else:
                 for transaction in data_json.get("transactions", []):
                     transaction = schemas.Transaction(
-                        pynab=self.pynab, budget=budget, _json=transaction
+                        ynab_py=self.ynab_py, budget=budget, _json=transaction
                     )
                     ret_val["transactions"].append(transaction)
 
@@ -1053,7 +1053,7 @@ class Api:
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def import_transactions(
         self, budget: schemas.Budget = None, budget_id: str = "last-used"
@@ -1076,7 +1076,7 @@ class Api:
         if response.status_code in [200, 201]:
             return _json.get("data", {}).get("transaction_ids", [])
         else:
-            return schemas.Error(pynab=self.pynab, _json=_json.get("error", {}))
+            return schemas.Error(ynab_py=self.ynab_py, _json=_json.get("error", {}))
 
     def get_transaction(
         self,
@@ -1111,12 +1111,12 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             return schemas.Transaction(
-                pynab=self.pynab, _json=data_json.get("transaction", [])
+                ynab_py=self.ynab_py, _json=data_json.get("transaction", [])
             )
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def update_transaction(
         self,
@@ -1156,11 +1156,11 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             return schemas.Transaction(
-                pynab=self.pynab, _json=data_json.get("transaction", [])
+                ynab_py=self.ynab_py, _json=data_json.get("transaction", [])
             )
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def delete_transaction(
         self,
@@ -1195,11 +1195,11 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             return schemas.Transaction(
-                pynab=self.pynab, _json=data_json.get("transaction", [])
+                ynab_py=self.ynab_py, _json=data_json.get("transaction", [])
             )
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_account_transactions(
         self,
@@ -1235,26 +1235,26 @@ class Api:
             account_id=account_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_account_transactions"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_account_transactions"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_account_transactions"] = data_json.get(
+            self.ynab_py._server_knowledges["get_account_transactions"] = data_json.get(
                 "server_knowledge", 0
             )
             transactions = utils._dict()
             for transaction in data_json.get("transactions", []):
                 transaction = schemas.Transaction(
-                    pynab=self.pynab, budget=budget, _json=transaction
+                    ynab_py=self.ynab_py, budget=budget, _json=transaction
                 )
                 transactions[transaction.id] = transaction
             return transactions
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_category_transactions(
         self,
@@ -1290,25 +1290,25 @@ class Api:
             category_id=category_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_category_transactions"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_category_transactions"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_category_transactions"] = data_json.get(
+            self.ynab_py._server_knowledges["get_category_transactions"] = data_json.get(
                 "server_knowledge", 0
             )
             transactions = utils._dict()
             for transaction in data_json.get("transactions", []):
                 transaction = schemas.Transaction(
-                    pynab=self.pynab, budget=budget, _json=transaction
+                    ynab_py=self.ynab_py, budget=budget, _json=transaction
                 )
                 transactions[transaction.id] = transaction
             return transactions
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_payee_transactions(
         self,
@@ -1344,25 +1344,25 @@ class Api:
             payee_id=payee_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_payee_transactions"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_payee_transactions"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_payee_transactions"] = data_json.get(
+            self.ynab_py._server_knowledges["get_payee_transactions"] = data_json.get(
                 "server_knowledge", 0
             )
             transactions = utils._dict()
             for transaction in data_json.get("transactions", []):
                 transaction = schemas.Transaction(
-                    pynab=self.pynab, budget=budget, _json=transaction
+                    ynab_py=self.ynab_py, budget=budget, _json=transaction
                 )
                 transactions[transaction.id] = transaction
             return transactions
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_month_transactions(
         self,
@@ -1398,25 +1398,25 @@ class Api:
             month=month_id,
             since_date=since_date,
             type=type,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_month_transactions"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_month_transactions"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_month_transactions"] = data_json.get(
+            self.ynab_py._server_knowledges["get_month_transactions"] = data_json.get(
                 "server_knowledge", 0
             )
             transactions = utils._dict()
             for transaction in data_json.get("transactions", []):
                 transaction = schemas.Transaction(
-                    pynab=self.pynab, budget=budget, _json=transaction
+                    ynab_py=self.ynab_py, budget=budget, _json=transaction
                 )
                 transactions[transaction.id] = transaction
             return transactions
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def get_scheduled_transactions(
         self,
@@ -1441,26 +1441,26 @@ class Api:
 
         response = self.endpoints.request_get_scheduled_transactions(
             budget_id=budget_id,
-            last_knowledge_of_server=self.pynab.server_knowledges("get_scheduled_transactions"),
+            last_knowledge_of_server=self.ynab_py.server_knowledges("get_scheduled_transactions"),
         )
         _json = response.json()
 
         if response.status_code == 200:
             data_json = _json.get("data", {})
-            self.pynab._server_knowledges["get_scheduled_transactions"] = data_json.get(
+            self.ynab_py._server_knowledges["get_scheduled_transactions"] = data_json.get(
                 "server_knowledge", 0
             )
             transactions = utils._dict()
             for scheduled_transaction in data_json.get("scheduled_transactions", []):
                 scheduled_transaction = schemas.ScheduledTransaction(
-                    pynab=self.pynab, budget=budget, _json=scheduled_transaction
+                    ynab_py=self.ynab_py, budget=budget, _json=scheduled_transaction
                 )
                 transactions[scheduled_transaction.id] = scheduled_transaction
             return transactions
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
 
     def create_scheduled_transaction(
         self,
@@ -1506,14 +1506,14 @@ class Api:
         if response.status_code == 201:
             data_json = _json.get("data", {})
             scheduled_transaction = schemas.ScheduledTransaction(
-                pynab=self.pynab,
+                ynab_py=self.ynab_py,
                 budget=budget,
                 _json=data_json.get("scheduled_transaction", {}),
             )
             return scheduled_transaction
         else:
             error_json = _json.get("error", {})
-            return schemas.Error(pynab=self.pynab, _json=error_json)
+            return schemas.Error(ynab_py=self.ynab_py, _json=error_json)
 
     def get_scheduled_transaction(
         self,
@@ -1553,7 +1553,7 @@ class Api:
         if response.status_code == 200:
             data_json = _json.get("data", {})
             scheduled_transaction = schemas.ScheduledTransaction(
-                pynab=self.pynab,
+                ynab_py=self.ynab_py,
                 budget=budget,
                 _json=data_json.get("scheduled_transaction", {}),
             )
@@ -1561,4 +1561,4 @@ class Api:
 
         else:
             error_json = _json.get("error", {})
-            raise Exception(schemas.Error(pynab=self.pynab, _json=error_json))
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))

@@ -1,7 +1,7 @@
 from datetime import date, datetime
-import pynab.enums as enums
-import pynab.constants as constants
-import pynab.utils as utils
+import ynab_py.enums as enums
+import ynab_py.constants as constants
+import ynab_py.utils as utils
 import logging
 
 from dateutil.parser import isoparse
@@ -10,19 +10,19 @@ import json
 
 
 class User:
-    def __init__(self, pynab=None, _json: str = None):
+    def __init__(self, ynab_py=None, _json: str = None):
         """
         Initializes a new instance of the class.
 
         Args:
-            pynab: The pynab object.
+            ynab_py: The ynab_py object.
             _json: The JSON string.
 
         Attributes:
             id: The ID attribute.
         """
 
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.id: str = self._json.get("id", "")
@@ -50,12 +50,12 @@ class User:
 
 
 class Error:
-    def __init__(self, pynab=None, _json: str = None):
+    def __init__(self, ynab_py=None, _json: str = None):
         """
         Initializes a new instance of the Schema class.
 
         Args:
-            pynab: An instance of the Pynab class.
+            ynab_py: An instance of the YnabPy class.
             _json: A JSON string representing the schema.
 
         Attributes:
@@ -69,7 +69,7 @@ class Error:
         Returns:
             None.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.id: str = self._json.get("id", "")
@@ -89,12 +89,12 @@ class Error:
 
 
 class Budget:
-    def __init__(self, pynab=None, _json: str = None):
+    def __init__(self, ynab_py=None, _json: str = None):
         """
         Initialize a new instance of the `schemas` class.
 
         Args:
-            pynab: An instance of the `pynab` class.
+            ynab_py: An instance of the `ynab_py` class.
             _json: A JSON string.
 
         Attributes:
@@ -116,7 +116,7 @@ class Budget:
             scheduled_transactions (dict): A dictionary of scheduled transactions.
             scheduled_subtransactions (dict): A dictionary of scheduled subtransactions.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self._settings = None
@@ -133,10 +133,10 @@ class Budget:
             self._json.get("last_month", constants.EPOCH)
         ).date()
         self.date_format: DateFormat = DateFormat(
-            pynab=self.pynab, _json=self._json.get("date_format", {})
+            ynab_py=self.ynab_py, _json=self._json.get("date_format", {})
         )
         self.currency_format: CurrencyFormat = CurrencyFormat(
-            pynab=self.pynab, _json=self._json.get("currency_format", {})
+            ynab_py=self.ynab_py, _json=self._json.get("currency_format", {})
         )
 
         self._accounts = utils._dict()
@@ -203,7 +203,7 @@ class Budget:
             None
         """
         for account in _json:
-            account_obj = Account(pynab=self.pynab, _json=account)
+            account_obj = Account(ynab_py=self.ynab_py, _json=account)
             self._accounts[account_obj.id] = account_obj
 
     @accounts.getter
@@ -215,7 +215,7 @@ class Budget:
             dict: A dictionary containing the accounts associated with the budget.
         """
         if len(self._accounts) == 0:
-            self._accounts = self.pynab.api.get_accounts(budget=self)
+            self._accounts = self.ynab_py.api.get_accounts(budget=self)
         return self._accounts
 
     @property
@@ -240,7 +240,7 @@ class Budget:
             None
         """
         for payee in _json:
-            payee_obj = Payee(pynab=self.pynab, _json=payee)
+            payee_obj = Payee(ynab_py=self.ynab_py, _json=payee)
             self._payees[payee_obj.id] = payee_obj
 
     @payees.getter
@@ -248,7 +248,7 @@ class Budget:
         """
         Retrieves the payees associated with the budget.
 
-        If the payees have not been fetched yet, it calls the `get_payees` method from the `pynab.api` module
+        If the payees have not been fetched yet, it calls the `get_payees` method from the `ynab_py.api` module
         and stores the result in the `_payees` attribute.
 
         Returns:
@@ -256,7 +256,7 @@ class Budget:
 
         """
         if len(self._payees) == 0:
-            self._payees = self.pynab.api.get_payees(budget=self)
+            self._payees = self.ynab_py.api.get_payees(budget=self)
         return self._payees
 
     @property
@@ -282,7 +282,7 @@ class Budget:
         None
         """
         for payee_location in _json:
-            payee_location_obj = PayeeLocation(pynab=self.pynab, _json=payee_location)
+            payee_location_obj = PayeeLocation(ynab_py=self.ynab_py, _json=payee_location)
             self._payee_locations[payee_location_obj.id] = payee_location_obj
 
     @payee_locations.getter
@@ -291,7 +291,7 @@ class Budget:
         Retrieves and returns the payee locations associated with the budget.
 
         If the payee locations have not been fetched yet, it calls the `get_payee_locations` method
-        from the `pynab.api` module to retrieve the payee locations and stores them in the `_payee_locations`
+        from the `ynab_py.api` module to retrieve the payee locations and stores them in the `_payee_locations`
         attribute. Subsequent calls to this method will return the cached payee locations.
 
         Returns:
@@ -299,7 +299,7 @@ class Budget:
 
         """
         if len(self._payee_locations) == 0:
-            self._payee_locations = self.pynab.api.get_payee_locations(budget=self)
+            self._payee_locations = self.ynab_py.api.get_payee_locations(budget=self)
         return self._payee_locations
 
     @property
@@ -323,7 +323,7 @@ class Budget:
             None
         """
         for category_group in _json:
-            category_group_obj = CategoryGroup(pynab=self.pynab, _json=category_group)
+            category_group_obj = CategoryGroup(ynab_py=self.ynab_py, _json=category_group)
             self._category_groups[category_group_obj.id] = category_group_obj
 
     @category_groups.getter
@@ -331,14 +331,14 @@ class Budget:
         """
         Retrieves the category groups for the budget.
 
-        If the category groups have not been fetched yet, it calls the `get_categories` method of the `pynab.api` object
+        If the category groups have not been fetched yet, it calls the `get_categories` method of the `ynab_py.api` object
         passing the current budget as an argument and assigns the result to the `_category_groups` attribute.
 
         Returns:
             dict: A dictionary containing the category groups for the budget.
         """
         if len(self._category_groups) == 0:
-            self._category_groups = self.pynab.api.get_categories(budget=self)
+            self._category_groups = self.ynab_py.api.get_categories(budget=self)
         return self._category_groups
 
     @property
@@ -363,7 +363,7 @@ class Budget:
             None
         """
         for category in _json:
-            category_obj = Category(pynab=self.pynab, _json=category)
+            category_obj = Category(ynab_py=self.ynab_py, _json=category)
             self._categories[category_obj.id] = category_obj
 
     @categories.getter
@@ -371,7 +371,7 @@ class Budget:
         """
         Retrieves the categories associated with the budget.
 
-        If the categories have not been fetched yet, it makes a request to the Pynab API
+        If the categories have not been fetched yet, it makes a request to the YnabPy API
         to retrieve the budget's categories. The fetched categories are then stored in
         the `_categories` attribute for future use.
 
@@ -405,7 +405,7 @@ class Budget:
             None
         """
         for month in _json:
-            month_obj = Month(pynab=self.pynab, _json=month)
+            month_obj = Month(ynab_py=self.ynab_py, _json=month)
             self._months[month_obj.month] = month_obj
 
     @months.getter
@@ -413,13 +413,13 @@ class Budget:
         """
         Returns the months associated with the budget.
 
-        If the `_months` attribute is empty, it retrieves the months using the `get_months` method from the `pynab.api` module.
+        If the `_months` attribute is empty, it retrieves the months using the `get_months` method from the `ynab_py.api` module.
 
         Returns:
             dict: A dictionary containing the months associated with the budget.
         """
         if len(self._months) == 0:
-            self._months = self.pynab.api.get_months(budget=self)
+            self._months = self.ynab_py.api.get_months(budget=self)
         return self._months
 
     @property
@@ -444,7 +444,7 @@ class Budget:
 
         """
         for transaction in _json:
-            transaction_obj = Transaction(pynab=self.pynab, _json=transaction)
+            transaction_obj = Transaction(ynab_py=self.ynab_py, _json=transaction)
             self._transactions[transaction_obj.id] = transaction_obj
 
     @transactions.getter
@@ -452,7 +452,7 @@ class Budget:
         """
         Retrieves the transactions associated with the budget.
 
-        If the transactions have not been fetched yet, it calls the `get_transactions` method of the `pynab.api` object
+        If the transactions have not been fetched yet, it calls the `get_transactions` method of the `ynab_py.api` object
         passing the current budget as a parameter. The fetched transactions are then stored in the `_transactions`
         attribute of the budget object.
 
@@ -461,7 +461,7 @@ class Budget:
 
         """
         if len(self._transactions) == 0:
-            self._transactions = self.pynab.api.get_transactions(budget=self)
+            self._transactions = self.ynab_py.api.get_transactions(budget=self)
         return self._transactions
 
     @property
@@ -485,7 +485,7 @@ class Budget:
             None
         """
         for subtransaction in _json:
-            subtransaction_obj = SubTransaction(pynab=self.pynab, _json=subtransaction)
+            subtransaction_obj = SubTransaction(ynab_py=self.ynab_py, _json=subtransaction)
             self._subtransactions[subtransaction_obj.id] = subtransaction_obj
 
     @subtransactions.getter
@@ -499,7 +499,7 @@ class Budget:
             dict: A dictionary containing the subtransactions associated with the budget.
         """
         if len(self._subtransactions) == 0:
-            budget = self.pynab.api.get_budget(budget=self)
+            budget = self.ynab_py.api.get_budget(budget=self)
             self._subtransactions = budget.subtransactions
         return self._subtransactions
 
@@ -525,7 +525,7 @@ class Budget:
         """
         for scheduled_transaction in _json:
             scheduled_transaction_obj = ScheduledTransaction(
-                pynab=self.pynab, _json=scheduled_transaction
+                ynab_py=self.ynab_py, _json=scheduled_transaction
             )
             self._scheduled_transactions[scheduled_transaction_obj.id] = (
                 scheduled_transaction_obj
@@ -537,13 +537,13 @@ class Budget:
         Retrieves the scheduled transactions for the budget.
 
         If the scheduled transactions have not been fetched yet, it calls the `get_scheduled_transactions` method
-        from the `pynab.api` module to fetch them and stores them in the `_scheduled_transactions` attribute.
+        from the `ynab_py.api` module to fetch them and stores them in the `_scheduled_transactions` attribute.
 
         Returns:
             dict: A dictionary containing the scheduled transactions for the budget.
         """
         if len(self._scheduled_transactions) == 0:
-            self._scheduled_transactions = self.pynab.api.get_scheduled_transactions(
+            self._scheduled_transactions = self.ynab_py.api.get_scheduled_transactions(
                 budget=self
             )
         return self._scheduled_transactions
@@ -570,7 +570,7 @@ class Budget:
         """
         for scheduled_subtransaction in _json:
             scheduled_subtransaction_obj = ScheduledSubTransaction(
-                pynab=self.pynab, _json=scheduled_subtransaction
+                ynab_py=self.ynab_py, _json=scheduled_subtransaction
             )
             self._scheduled_subtransactions[scheduled_subtransaction_obj.id] = (
                 scheduled_subtransaction_obj
@@ -588,7 +588,7 @@ class Budget:
             dict: A dictionary containing the scheduled subtransactions.
         """
         if len(self._scheduled_subtransactions) == 0:
-            budget = self.pynab.api.get_budget(budget=self)
+            budget = self.ynab_py.api.get_budget(budget=self)
             self._scheduled_subtransactions = budget.subtransactions
         return self._scheduled_subtransactions
 
@@ -600,65 +600,65 @@ class Budget:
         Returns:
             The budget object with additional details.
         """
-        self = self.pynab.api.get_budget(budget=self)
+        self = self.ynab_py.api.get_budget(budget=self)
         return self
 
     @property
     def settings(self):
         """
-        Retrieves the budget settings from the Pynab API.
+        Retrieves the budget settings from the YnabPy API.
 
         If the settings have already been retrieved, it returns the cached settings.
-        Otherwise, it makes a request to the Pynab API to fetch the settings.
+        Otherwise, it makes a request to the YnabPy API to fetch the settings.
 
         Returns:
             The budget settings.
 
         """
         if self._settings is None:
-            self._settings = self.pynab.api.get_budget_settings(budget=self)
+            self._settings = self.ynab_py.api.get_budget_settings(budget=self)
         return self._settings
 
 
 class BudgetSettings:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initialize a new instance of the Schemas class.
 
         Args:
-            pynab: An instance of the Pynab class.
+            ynab_py: An instance of the YnabPy class.
             _json: A JSON string.
 
         Attributes:
             date_format: An instance of the DateFormat class.
             currency_format: An instance of the CurrencyFormat class.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
 
         self.date_format: DateFormat = DateFormat(
-            pynab=self.pynab, _json=self._json.get("date_format", {})
+            ynab_py=self.ynab_py, _json=self._json.get("date_format", {})
         )
         self.currency_format: CurrencyFormat = CurrencyFormat(
-            pynab=self.pynab, _json=self._json.get("currency_format", {})
+            ynab_py=self.ynab_py, _json=self._json.get("currency_format", {})
         )
 
 
 class DateFormat:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initializes a new instance of the class.
 
         Args:
-            pynab: An optional parameter representing pynab.
+            ynab_py: An optional parameter representing ynab_py.
             _json: An optional parameter representing the JSON string.
 
         Attributes:
             format: A string representing the format, initialized with an empty string.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -667,12 +667,12 @@ class DateFormat:
 
 
 class CurrencyFormat:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initialize a new instance of the `ClassName` class.
 
         Args:
-            pynab: An optional parameter representing the `pynab` object.
+            ynab_py: An optional parameter representing the `ynab_py` object.
             _json: An optional parameter representing the JSON string.
 
         Attributes:
@@ -688,7 +688,7 @@ class CurrencyFormat:
         Returns:
             None
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = None
@@ -704,12 +704,12 @@ class CurrencyFormat:
 
 
 class Account:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initializes a new instance of the `schemas` class.
 
         Args:
-            pynab: An instance of the `pynab` class.
+            ynab_py: An instance of the `ynab_py` class.
             _json: A JSON string.
 
         Attributes:
@@ -732,7 +732,7 @@ class Account:
             debt_escrow_amounts (DebtEscrowAmounts): The escrow amounts of the debt.
             deleted (bool): Indicates if the schema is deleted.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -754,19 +754,19 @@ class Account:
         )
         self.debt_original_balance: int = self._json.get("debt_original_balance", 0)
         self.debt_interest_rates: DebtInterestRates = DebtInterestRates(
-            pynab=self.pynab,
+            ynab_py=self.ynab_py,
             budget=self.budget,
             account=self,
             _json=self._json.get("debt_interest_rates", {}),
         )
         self.debt_minimum_payments: DebtMinimumPayments = DebtMinimumPayments(
-            pynab=self.pynab,
+            ynab_py=self.ynab_py,
             budget=self.budget,
             account=self,
             _json=self._json.get("debt_minimum_payments", {}),
         )
         self.debt_escrow_amounts: DebtEscrowAmounts = DebtEscrowAmounts(
-            pynab=self.pynab,
+            ynab_py=self.ynab_py,
             budget=self.budget,
             account=self,
             _json=self._json.get("debt_escrow_amounts", {}),
@@ -835,7 +835,7 @@ class Account:
 class DebtInterestRates:
     def __init__(
         self,
-        pynab=None,
+        ynab_py=None,
         budget: Budget = None,
         account: Account = None,
         _json: str = None,
@@ -844,7 +844,7 @@ class DebtInterestRates:
         Initializes a new instance of the class.
 
         Args:
-            pynab: The pynab object.
+            ynab_py: The ynab_py object.
             _json: The JSON string.
 
         Attributes:
@@ -852,7 +852,7 @@ class DebtInterestRates:
             additionalProp2 (int): The value of additionalProp2 from the JSON, defaulting to 0 if not present.
             additionalProp3 (int): The value of additionalProp3 from the JSON, defaulting to 0 if not present.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -866,7 +866,7 @@ class DebtInterestRates:
 class DebtMinimumPayments:
     def __init__(
         self,
-        pynab=None,
+        ynab_py=None,
         budget: Budget = None,
         account: Account = None,
         _json: str = None,
@@ -875,7 +875,7 @@ class DebtMinimumPayments:
         Initializes a new instance of the Schema class.
 
         Args:
-            pynab: An instance of the Pynab class.
+            ynab_py: An instance of the YnabPy class.
             _json: A JSON string.
 
         Attributes:
@@ -883,7 +883,7 @@ class DebtMinimumPayments:
             additionalProp2: An integer representing additional property 2.
             additionalProp3: An integer representing additional property 3.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -897,7 +897,7 @@ class DebtMinimumPayments:
 class DebtEscrowAmounts:
     def __init__(
         self,
-        pynab=None,
+        ynab_py=None,
         budget: Budget = None,
         account: Account = None,
         _json: str = None,
@@ -906,7 +906,7 @@ class DebtEscrowAmounts:
         Initializes a new instance of the class.
 
         Args:
-            pynab: The pynab object.
+            ynab_py: The ynab_py object.
             _json: The JSON string.
 
         Attributes:
@@ -914,7 +914,7 @@ class DebtEscrowAmounts:
             additionalProp2: The value of additionalProp2, defaulting to 0 if not present in the JSON.
             additionalProp3: The value of additionalProp3, defaulting to 0 if not present in the JSON.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -928,7 +928,7 @@ class DebtEscrowAmounts:
 class Payee:
     def __init__(
         self,
-        pynab=None,
+        ynab_py=None,
         budget: Budget = None,
         _json: str = None,
     ):
@@ -936,7 +936,7 @@ class Payee:
         Initializes a new instance of the `schemas` class.
 
         Args:
-            pynab: An instance of the `pynab` class.
+            ynab_py: An instance of the `ynab_py` class.
             _json: A JSON string.
 
         Attributes:
@@ -945,7 +945,7 @@ class Payee:
             transfer_account_id (str): The ID of the transfer account.
             deleted (bool): Indicates if the schema is deleted or not.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -1025,12 +1025,12 @@ class Payee:
 
 
 class PayeeLocation:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initializes a new instance of the class.
 
         Args:
-            pynab: An optional parameter representing the pynab object.
+            ynab_py: An optional parameter representing the ynab_py object.
             _json: An optional parameter representing the JSON string.
 
         Attributes:
@@ -1040,7 +1040,7 @@ class PayeeLocation:
             longitude (str): The longitude value.
             deleted (bool): A flag indicating if the object is deleted.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -1063,12 +1063,12 @@ class PayeeLocation:
 
 
 class CategoryGroup:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initializes a new instance of the Schema class.
 
         Args:
-            pynab: An instance of the Pynab class.
+            ynab_py: An instance of the YnabPy class.
             _json: A JSON string representing the schema.
 
         Attributes:
@@ -1078,7 +1078,7 @@ class CategoryGroup:
             deleted (bool): Indicates if the schema is deleted.
             categories (dict): A dictionary of Category objects, where the keys are the category IDs.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -1089,17 +1089,17 @@ class CategoryGroup:
         self.deleted: bool = self._json.get("deleted", False)
         self.categories = utils._dict()
         for category_json in _json.get("categories", []):
-            category = Category(pynab=self.pynab, _json=category_json)
+            category = Category(ynab_py=self.ynab_py, _json=category_json)
             self.categories[category.id] = category
 
 
 class Category:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initializes a new instance of the Schema class.
 
         Args:
-            pynab: An instance of the Pynab class.
+            ynab_py: An instance of the YnabPy class.
             _json: A JSON string representing the schema.
 
         Attributes:
@@ -1128,7 +1128,7 @@ class Category:
             goal_overall_left (int): The overall left amount of the goal.
             deleted (bool): Indicates if the schema is deleted.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -1240,12 +1240,12 @@ class Category:
 
 
 class Month:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initializes a new instance of the Schema class.
 
         Args:
-            pynab: An optional parameter representing the Pynab object.
+            ynab_py: An optional parameter representing the YnabPy object.
             _json: An optional parameter representing the JSON string.
 
         Attributes:
@@ -1259,7 +1259,7 @@ class Month:
             deleted (bool): A flag indicating whether the schema is deleted or not.
             categories (dict): A dictionary containing the categories associated with the schema.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -1276,17 +1276,17 @@ class Month:
         self.deleted: bool = self._json.get("deleted", False)
         self.categories = utils._dict()
         for category_json in _json.get("categories", []):
-            category = Category(pynab=self.pynab, _json=category_json)
+            category = Category(ynab_py=self.ynab_py, _json=category_json)
             self.categories[category.id] = category
 
 
 class Transaction:
-    def __init__(self, pynab=None, budget: Budget = None, _json: dict = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: dict = None):
         """
         Initializes a new instance of the Transaction class.
 
         Args:
-            pynab (Optional[Pynab]): The Pynab instance.
+            ynab_py (Optional[YnabPy]): The YnabPy instance.
             _json (Optional[dict]): The JSON representation of the transaction.
 
         Attributes:
@@ -1315,7 +1315,7 @@ class Transaction:
             subtransactions (dict): A dictionary of subtransactions associated with the transaction.
         """
         ...
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: dict = _json
 
         self.budget = budget
@@ -1355,7 +1355,7 @@ class Transaction:
         self.subtransactions = utils._dict()
         for subtransaction in self._json.get("subtransactions", []):
             self.subtransactions[subtransaction["id"]] = SubTransaction(
-                pynab=self.pynab, _json=subtransaction
+                ynab_py=self.ynab_py, _json=subtransaction
             )
 
     def to_dict(self):
@@ -1466,12 +1466,12 @@ class Transaction:
 
 
 class SubTransaction:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initialize a new instance of the Schema class.
 
         Args:
-            pynab (optional): The pynab object.
+            ynab_py (optional): The ynab_py object.
             _json (optional): The JSON string.
 
         Attributes:
@@ -1487,7 +1487,7 @@ class SubTransaction:
             transfer_transaction_id (str): The ID of the transfer transaction.
             deleted (str): Indicates if the schema is deleted.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -1557,12 +1557,12 @@ class SubTransaction:
 
 
 class ScheduledTransaction:
-    def __init__(self, pynab=None, budget: Budget = None, _json: str = None):
+    def __init__(self, ynab_py=None, budget: Budget = None, _json: str = None):
         """
         Initializes a new instance of the class.
 
         Args:
-            pynab: An optional parameter representing the pynab object.
+            ynab_py: An optional parameter representing the ynab_py object.
             _json: An optional parameter representing the JSON string.
 
         Attributes:
@@ -1582,7 +1582,7 @@ class ScheduledTransaction:
             deleted (bool): A boolean value indicating whether the object is deleted or not.
         """
 
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.budget = budget
@@ -1696,12 +1696,12 @@ class ScheduledTransaction:
 
 
 class ScheduledSubTransaction:
-    def __init__(self, pynab=None, _json: str = None):
+    def __init__(self, ynab_py=None, _json: str = None):
         """
         Initializes a new instance of the Schema class.
 
         Args:
-            pynab: An instance of the Pynab class.
+            ynab_py: An instance of the YnabPy class.
             _json: A JSON string representing the schema.
 
         Attributes:
@@ -1714,7 +1714,7 @@ class ScheduledSubTransaction:
             transfer_account_id (str): The ID of the transfer account.
             deleted (bool): Indicates if the schema is deleted.
         """
-        self.pynab = pynab
+        self.ynab_py = ynab_py
         self._json: str = _json
 
         self.id: str = self._json.get("id", "")

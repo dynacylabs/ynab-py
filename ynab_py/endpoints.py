@@ -1,21 +1,21 @@
-import pynab.utils as utils
-from pynab import pynab
+import ynab_py.utils as utils
+from ynab_py.ynab_py import YnabPy
 
 
 class Endpoints:
 
-    def __init__(self, pynab: pynab = None):
+    def __init__(self, ynab_py: YnabPy = None):
         """
         Initializes an instance of the endpoints class.
 
         Parameters:
-        - pynab (pynab): An instance of the pynab class.
+        - ynab_py (YnabPy): An instance of the YnabPy class.
 
         Returns:
         - None
         """
-        self.pynab = pynab
-        self.http_utils = utils.http_utils(pynab=self.pynab)
+        self.ynab_py = ynab_py
+        self.http_utils = utils.http_utils(ynab_py=self.ynab_py)
 
     # GET /user
     def request_get_user(self):

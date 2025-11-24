@@ -1,16 +1,22 @@
-# Pynab
+# ynab-py
 
-**Pynab** is a Python library designed for seamless interaction with the YNAB (You Need A Budget) API. It provides a user-friendly interface to manage your budgets, accounts, transactions, and more with ease.
+**ynab-py** is a Python library designed for seamless interaction with the YNAB (You Need A Budget) API. It provides a user-friendly interface to manage your budgets, accounts, transactions, and more with ease.
 
-Pynab currently works with YNAB's 1.72.0 API. For more information, see https://api.ynab.com/v1.
+ynab-py currently works with YNAB's 1.72.0 API. For more information, see https://api.ynab.com/v1.
 
 ## Installation
 
-To install Pynab, follow these steps:
+To install ynab-py from PyPI:
 
 ```sh
-git clone https://github.com/dynacylabs/pynab.git
-cd pynab
+pip install ynab-py
+```
+
+Or to install from source:
+
+```sh
+git clone https://github.com/dynacylabs/ynab-py.git
+cd ynab-py
 python -m venv .venv
 source .venv/bin/activate
 pip install ./
@@ -18,13 +24,13 @@ pip install ./
 
 ## Usage
 
-### Initialize Pynab
+### Initialize ynab-py
 
-To begin using Pynab, initialize it with your YNAB Bearer token:
+To begin using ynab-py, initialize it with your YNAB Bearer token:
 
 ```python
-from pynab import Pynab
-pynab = Pynab(bearer="YOUR_BEARER_TOKEN_HERE")
+from ynab_py import YnabPy
+ynab = YnabPy(bearer="YOUR_BEARER_TOKEN_HERE")
 ```
 
 ### Retrieve Budgets
@@ -32,7 +38,7 @@ pynab = Pynab(bearer="YOUR_BEARER_TOKEN_HERE")
 Fetch a dictionary of your budgets:
 
 ```python
-budgets = pynab.budgets
+budgets = ynab.budgets
 ```
 
 ### Retrieve a Budget by Name*
@@ -40,7 +46,7 @@ budgets = pynab.budgets
 Retrieve a specific budget by its name:
 
 ```python
-test_budget = pynab.budgets.by(field="name", value="test_budget", first=True)
+test_budget = ynab.budgets.by(field="name", value="test_budget", first=True)
 ```
 
 ### Retrieve Accounts for a Budget
@@ -70,7 +76,7 @@ transactions = test_account.transactions
 \* _Note: Multiple items may be returned. You should verify whether the result is a dictionary or a single `Budget`, `Account`, or `Transaction` instance._
 
 ```python
-from pynab.schemas import Account
+from ynab_py.schemas import Account
 test_account = test_budget.accounts.by(field="name", value="test_account", first=False)
 if isinstance(test_account, Account):
     # Single account returned
@@ -110,7 +116,7 @@ Please ensure that your contributions do not break the live API tests. Run all t
 
 YNAB's API primarily offers read-only access, so you'll need to create a test budget manually for live API testing.
 
-Live API tests confirm that Pynab's API calls are correctly interpreted by the server, and that Pynab can process the server's responses.
+Live API tests confirm that ynab-py's API calls are correctly interpreted by the server, and that ynab-py can process the server's responses.
 
 #### Importing a Test Budget
 
@@ -169,4 +175,4 @@ handsdown
 - Add comprehensive type definitions.
 
 ## License
-Pynab is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+ynab-py is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ynab-py"
+version = "1.0.0"
+description = "A Python client for the You Need A Budget (YNAB) API"
+readme = "README.md"
+authors = [
+    {name = "Austin Conn", email = "austinc@dynacylabs.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["ynab", "budget", "api", "finance", "personal-finance"]
+requires-python = ">=3.6"
+dependencies = [
+    "requests",
+    "python-dateutil",
+]
+
+[project.urls]
+Homepage = "https://github.com/dynacylabs/ynab-py"
+Documentation = "https://github.com/dynacylabs/ynab-py#readme"
+Repository = "https://github.com/dynacylabs/ynab-py"
+Issues = "https://github.com/dynacylabs/ynab-py/issues"
+
+[tool.setuptools]
+packages = ["ynab_py"]

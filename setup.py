@@ -1,14 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pynab",
+    name="ynab-py",
     version="1.0.0",
     description="A Python client for the You Need A Budget (YNAB) API",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     author="Austin Conn",
     author_email="austinc@dynacylabs.com",
-    url="https://github.com/dynacylabs/pynab",
+    url="https://github.com/dynacylabs/ynab-py",
     packages=find_packages(),
     install_requires=[
         "requests",
