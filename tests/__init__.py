@@ -1,3 +1,3 @@
 """
-YNAB Python Client Tests
+Test suite for ynab-py library.
 """

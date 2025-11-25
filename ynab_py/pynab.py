@@ -35,6 +35,9 @@ class YnabPy:
             "get_scheduled_transactions": 0,
         }
 
+        self._rate_limiter = None
+        self._cache = None
+
         self.api = Api(ynab_py=self)
 
     def server_knowledges(self, endpoint: str = None):
@@ -71,3 +74,7 @@ class YnabPy:
             list: A list of budgets.
         """
         return self.api.get_budgets()
+
+
+# Alias for backwards compatibility
+Pynab = YnabPy

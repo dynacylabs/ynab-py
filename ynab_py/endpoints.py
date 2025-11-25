@@ -1,10 +1,13 @@
 import ynab_py.utils as utils
-from ynab_py.ynab_py import YnabPy
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ynab_py.ynab_py import YnabPy
 
 
 class Endpoints:
 
-    def __init__(self, ynab_py: YnabPy = None):
+    def __init__(self, ynab_py: 'YnabPy' = None):
         """
         Initializes an instance of the endpoints class.
 
@@ -419,12 +422,15 @@ class Endpoints:
             dict: The response from the server containing the retrieved transactions.
         """
         endpoint = f"/budgets/{budget_id}/transactions"
+        params = []
         if since_date:
-            endpoint += f"?since_date={since_date}"
+            params.append(f"since_date={since_date}")
         if type:
-            endpoint += f"?type={type}"
+            params.append(f"type={type}")
         if last_knowledge_of_server:
-            endpoint += f"?last_knowledge_of_server={last_knowledge_of_server}"
+            params.append(f"last_knowledge_of_server={last_knowledge_of_server}")
+        if params:
+            endpoint += "?" + "&".join(params)
         return self.http_utils.get(endpoint=endpoint)
 
     # POST /budgets/{budget_id}/transactions
@@ -715,3 +721,26 @@ class Endpoints:
             f"/budgets/{budget_id}/scheduled_transactions/{scheduled_transaction_id}"
         )
         return self.http_utils.get(endpoint=endpoint)
+
+    # PUT /budgets/{budget_id}/scheduled_transactions/{scheduled_transaction_id}
+    def request_update_scheduled_transaction(
+        self, budget_id: str = "last-used", scheduled_transaction_id: str = None, request_body: dict = None
+    ):
+        """
+        Updates a scheduled transaction in the specified budget.
+
+        Args:
+            budget_id (str, optional): The ID of the budget. Defaults to "last-used".
+            scheduled_transaction_id (str, optional): The ID of the scheduled transaction.
+            request_body (dict, optional): The request body containing the updated scheduled transaction details.
+
+        Returns:
+            The response from the API call.
+
+        Raises:
+            HTTPException: If the request fails.
+        """
+        endpoint = (
+            f"/budgets/{budget_id}/scheduled_transactions/{scheduled_transaction_id}"
+        )
+        return self.http_utils.put(endpoint=endpoint, json=request_body)

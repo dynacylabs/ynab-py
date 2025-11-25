@@ -1,0 +1,3 @@
+[submodule "ynab-sdk-python"]
+	path = ynab-sdk-python
+	url = https://github.com/ynab/ynab-sdk-python.git

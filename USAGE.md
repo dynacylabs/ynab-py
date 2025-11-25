@@ -537,6 +537,190 @@ milliunits = dollars * 1000
 
 For more examples and complete scripts, check the repository's examples directory or visit the [GitHub repository](https://github.com/dynacylabs/ynab-py).
 
+---
+
+## Advanced Features
+
+### Automatic Rate Limiting
+
+ynab-py automatically manages YNAB's 200 requests/hour rate limit, preventing errors.
+
+```python
+from ynab_py import YnabPy
+
+# Rate limiting is enabled by default
+ynab = YnabPy(bearer="your_token", enable_rate_limiting=True)
+
+# Make as many requests as you need - rate limiter handles it
+for budget in ynab.budgets.values():
+    accounts = budget.accounts  # Won't exceed rate limit
+    for account in accounts.values():
+        transactions = account.transactions  # Automatically throttled
+
+# Check rate limit statistics
+stats = ynab.get_rate_limit_stats()
+print(f"Used: {stats['requests_used']}/{stats['max_requests']}")
+print(f"Remaining: {stats['requests_remaining']}")
+print(f"Usage: {stats['usage_percentage']:.1f}%")
+```
+
+### Response Caching
+
+Built-in caching reduces API calls and improves performance.
+
+```python
+# Caching is enabled by default with 5-minute TTL
+ynab = YnabPy(
+    bearer="your_token",
+    enable_caching=True,
+    cache_ttl=600  # 10 minutes
+)
+
+# First call hits the API
+budgets = ynab.budgets  # API call
+
+# Subsequent calls use cache (within TTL)
+budgets_again = ynab.budgets  # From cache (fast!)
+
+# Check cache statistics
+cache_stats = ynab.get_cache_stats()
+print(f"Cache hit rate: {cache_stats['hit_rate_percent']:.1f}%")
+print(f"Cache size: {cache_stats['size']}/{cache_stats['max_size']}")
+
+# Clear cache when needed
+ynab.clear_cache()
+```
+
+### Enhanced Error Handling
+
+Detailed, specific exceptions make debugging easier.
+
+```python
+from ynab_py import YnabPy
+from ynab_py.exceptions import (
+    AuthenticationError,
+    RateLimitError,
+    NotFoundError,
+    NetworkError
+)
+
+ynab = YnabPy(bearer="your_token")
+
+try:
+    budget = ynab.budgets.by(field="name", value="Nonexistent", first=True)
+except AuthenticationError:
+    print("Invalid API token")
+except NotFoundError as e:
+    print(f"Resource not found: {e.error_detail}")
+except RateLimitError as e:
+    print(f"Rate limit exceeded. Retry after {e.retry_after} seconds")
+except NetworkError as e:
+    print(f"Network issue: {e.message}")
+```
+
+### Utility Functions
+
+#### Amount Formatting
+
+```python
+from ynab_py import utils
+
+# Convert between milliunits and dollars
+milliunits = 25000
+dollars = utils.milliunits_to_dollars(milliunits)  # 25.0
+
+dollars = 15.50
+milliunits = utils.dollars_to_milliunits(dollars)  # 15500
+
+# Format for display
+formatted = utils.format_amount(25000)  # "$25.00"
+formatted = utils.format_amount(-15500, currency_symbol="€")  # "-€15.50"
+```
+
+#### Export to CSV
+
+```python
+from ynab_py import utils
+
+# Export transactions to CSV
+utils.export_transactions_to_csv(
+    account.transactions,
+    file_path="transactions.csv"
+)
+
+# Or get CSV string
+csv_data = utils.export_transactions_to_csv(account.transactions)
+
+# Custom columns
+utils.export_transactions_to_csv(
+    account.transactions,
+    file_path="custom.csv",
+    include_columns=['date', 'payee_name', 'amount', 'memo']
+)
+```
+
+#### Date Filtering
+
+```python
+from ynab_py import utils
+from datetime import date, timedelta
+
+# Get transactions from last 30 days
+thirty_days_ago = date.today() - timedelta(days=30)
+recent = utils.filter_transactions_by_date_range(
+    account.transactions,
+    start_date=thirty_days_ago
+)
+
+# Specific date range
+january = utils.filter_transactions_by_date_range(
+    account.transactions,
+    start_date="2025-01-01",
+    end_date="2025-01-31"
+)
+```
+
+#### Spending Analysis
+
+```python
+from ynab_py import utils
+
+# Spending by category
+spending_by_category = utils.get_spending_by_category(account.transactions)
+for category, amount in sorted(spending_by_category.items(), key=lambda x: x[1], reverse=True):
+    print(f"{category}: {utils.format_amount(amount)}")
+
+# Spending by payee
+spending_by_payee = utils.get_spending_by_payee(account.transactions)
+top_10_payees = sorted(spending_by_payee.items(), key=lambda x: x[1], reverse=True)[:10]
+
+# Calculate net worth
+net_worth = utils.calculate_net_worth(budget)
+print(f"Net Worth: {utils.format_amount(net_worth)}")
+```
+
+### Advanced Configuration
+
+Customize ynab-py to your needs.
+
+```python
+from ynab_py import YnabPy
+
+ynab = YnabPy(
+    bearer="your_token",
+    enable_rate_limiting=True,      # Automatic rate limiting
+    enable_caching=True,             # Response caching
+    cache_ttl=600,                   # Cache for 10 minutes
+    log_level="DEBUG"                # Enable debug logging
+)
+
+# Monitor performance
+print("Rate Limit Stats:", ynab.get_rate_limit_stats())
+print("Cache Stats:", ynab.get_cache_stats())
+```
+
+---
+
 ## API Reference
 
 For detailed information about the YNAB API endpoints and data structures, visit the [official YNAB API documentation](https://api.ynab.com/).

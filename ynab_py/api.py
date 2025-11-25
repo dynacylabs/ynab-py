@@ -3,10 +3,14 @@ from ynab_py.endpoints import Endpoints
 import ynab_py.enums as enums
 from datetime import datetime
 import ynab_py.utils as utils
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ynab_py.ynab_py import YnabPy
 
 
 class Api:
-    def __init__(self, ynab_py=None):
+    def __init__(self, ynab_py: 'YnabPy' = None):
         """
         Initializes an instance of the API class.
 
@@ -64,13 +68,27 @@ class Api:
                 budget = schemas.Budget(ynab_py=self.ynab_py, _json=budget_json)
                 budgets[budget.id] = budget
 
-            if data_json.get("default_budget", []) is not None:
-                for default_budget_json in data_json.get("default_budget", []):
-                    default_budget = schemas.Budget(
-                        ynab_py=self.ynab_py, _json=default_budget_json
-                    )
-                    for budget in budgets:
-                        if budget.id == default_budget.id:
+            if data_json.get("default_budget") is not None:
+                default_budget_data = data_json.get("default_budget")
+                # Handle both dict (single budget) and list formats
+                if isinstance(default_budget_data, dict):
+                    default_budget_data = [default_budget_data]
+                elif not isinstance(default_budget_data, list):
+                    default_budget_data = []
+                
+                for default_budget_json in default_budget_data:
+                    # default_budget_json might be just an ID string or a full budget object
+                    if isinstance(default_budget_json, str):
+                        default_budget_id = default_budget_json
+                    else:
+                        default_budget = schemas.Budget(
+                            ynab_py=self.ynab_py, _json=default_budget_json
+                        )
+                        default_budget_id = default_budget.id
+                    
+                    # budgets is a _dict, iterate over values
+                    for budget in budgets.values():
+                        if budget.id == default_budget_id:
                             budget.default = True
 
             return budgets
@@ -391,7 +409,7 @@ class Api:
         """
         budget_id = budget.id if budget else budget_id
         category_group_id = category_group.id if category else category_group
-        category_id = category.id if category else category
+        category_id = category.id if category else category_id
 
         request_body = {
             "category": {
@@ -919,8 +937,16 @@ class Api:
         """
         budget_id = budget.id if budget else budget_id
 
+        # Normalize transactions to list if dict is passed
+        if isinstance(transactions, dict):
+            transactions = [transactions]
+
         if len(transactions) == 1:
-            transaction_dict = transactions[0].to_dict()
+            # Handle both dict and Transaction objects
+            if isinstance(transactions[0], dict):
+                transaction_dict = transactions[0]
+            else:
+                transaction_dict = transactions[0].to_dict()
 
             request_body = {
                 "transaction": {
@@ -942,7 +968,11 @@ class Api:
         else:
             transactions_list = []
             for transaction in transactions:
-                transaction_dict = transactions[0].to_dict()
+                # Handle both dict and Transaction objects
+                if isinstance(transaction, dict):
+                    transaction_dict = transaction
+                else:
+                    transaction_dict = transaction.to_dict()
 
                 transactions_list.append(
                     {
@@ -983,6 +1013,7 @@ class Api:
                     budget=budget,
                     _json=data_json.get("transaction", {}),
                 )
+                return ret_val
             else:
                 transactions = []
                 for transaction in data_json.get("transactions", []):
@@ -1018,8 +1049,21 @@ class Api:
         """
         budget_id = budget.id if budget else budget_id
 
+        transactions_list = []
+        for txn in transactions:
+            if hasattr(txn, "to_dict"):
+                transactions_list.append(txn.to_dict())
+            elif isinstance(txn, dict):
+                transactions_list.append(txn)
+            else:
+                # Handle objects without to_dict method - try to convert to dict
+                if hasattr(txn, '__dict__'):
+                    transactions_list.append(vars(txn))
+                else:
+                    transactions_list.append(txn)
+
         request_body = {
-            "transactions": [transaction.to_dict() for transaction in transactions]
+            "transactions": transactions_list
         }
 
         response = self.endpoints.request_update_transactions(
@@ -1043,6 +1087,7 @@ class Api:
                     _json=data_json.get("transaction", {}),
                 )
             else:
+                ret_val["transactions"] = []
                 for transaction in data_json.get("transactions", []):
                     transaction = schemas.Transaction(
                         ynab_py=self.ynab_py, budget=budget, _json=transaction
@@ -1481,7 +1526,12 @@ class Api:
         """
         budget_id = budget.id if budget else budget_id
 
-        scheduled_transaction_dict = scheduled_transaction.to_dict()
+        if hasattr(scheduled_transaction, "to_dict"):
+            scheduled_transaction_dict = scheduled_transaction.to_dict()
+        elif isinstance(scheduled_transaction, dict):
+            scheduled_transaction_dict = scheduled_transaction
+        else:
+            scheduled_transaction_dict = scheduled_transaction
 
         # Ensure the scheduled_transaction is converted to a dictionary correctly
         request_body = {
@@ -1559,6 +1609,60 @@ class Api:
             )
             return scheduled_transaction
 
+        else:
+            error_json = _json.get("error", {})
+            raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))
+
+    def update_scheduled_transaction(
+        self,
+        budget: schemas.Budget = None,
+        budget_id: str = "last-used",
+        scheduled_transaction_id: str = None,
+        scheduled_transaction: schemas.ScheduledTransaction = None,
+    ):
+        """
+        Updates a scheduled transaction.
+
+        Args:
+            budget (schemas.Budget, optional): The budget object. Defaults to None.
+            budget_id (str, optional): The budget ID. Defaults to "last-used".
+            scheduled_transaction_id (str, optional): The scheduled transaction ID. Defaults to None.
+            scheduled_transaction (schemas.ScheduledTransaction, optional): The scheduled transaction object. Defaults to None.
+
+        Returns:
+            schemas.ScheduledTransaction: The updated scheduled transaction object.
+
+        Raises:
+            Exception: If the API request fails.
+        """
+        budget_id = budget.id if budget else budget_id
+
+        if hasattr(scheduled_transaction, "to_dict"):
+            scheduled_transaction_dict = scheduled_transaction.to_dict()
+        elif isinstance(scheduled_transaction, dict):
+            scheduled_transaction_dict = scheduled_transaction
+        else:
+            scheduled_transaction_dict = scheduled_transaction
+
+        request_body = {
+            "scheduled_transaction": scheduled_transaction_dict
+        }
+
+        response = self.endpoints.request_update_scheduled_transaction(
+            budget_id=budget_id,
+            scheduled_transaction_id=scheduled_transaction_id,
+            request_body=request_body
+        )
+        _json = response.json()
+
+        if response.status_code == 200:
+            data_json = _json.get("data", {})
+            scheduled_transaction = schemas.ScheduledTransaction(
+                ynab_py=self.ynab_py,
+                budget=budget,
+                _json=data_json.get("scheduled_transaction", {}),
+            )
+            return scheduled_transaction
         else:
             error_json = _json.get("error", {})
             raise Exception(schemas.Error(ynab_py=self.ynab_py, _json=error_json))

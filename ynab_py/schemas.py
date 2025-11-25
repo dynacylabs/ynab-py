@@ -299,7 +299,7 @@ class Budget:
 
         """
         if len(self._payee_locations) == 0:
-            self._payee_locations = self.ynab_py.api.get_payee_locations(budget=self)
+            self._payee_locations = self.ynab_py.api.get_budget_payee_locations(budget=self)
         return self._payee_locations
 
     @property
@@ -500,7 +500,7 @@ class Budget:
         """
         if len(self._subtransactions) == 0:
             budget = self.ynab_py.api.get_budget(budget=self)
-            self._subtransactions = budget.subtransactions
+            self._subtransactions = budget._subtransactions
         return self._subtransactions
 
     @property
@@ -589,7 +589,7 @@ class Budget:
         """
         if len(self._scheduled_subtransactions) == 0:
             budget = self.ynab_py.api.get_budget(budget=self)
-            self._scheduled_subtransactions = budget.subtransactions
+            self._scheduled_subtransactions = budget._scheduled_subtransactions
         return self._scheduled_subtransactions
 
     @property
@@ -1326,12 +1326,15 @@ class Transaction:
         ).date()
         self.amount: int = self._json.get("amount", 0)
         self.memo: str = self._json.get("memo", "")
+        # Handle empty string for cleared status
+        cleared_value = self._json.get("cleared", "") or "uncleared"
         self.cleared: enums.TransactionClearedStatus = enums.TransactionClearedStatus(
-            self._json.get("cleared", "")
+            cleared_value
         )
         self.approved: bool = self._json.get("approved", False)
+        flag_color_value = self._json.get("flag_color", "") or None
         self.flag_color: enums.TransactionFlagColor = enums.TransactionFlagColor(
-            self._json.get("flag_color", "")
+            flag_color_value
         )
         self.flag_name: str = self._json.get("flag_name", "")
         self.account_id: str = self._json.get("account_id", "")
@@ -1599,8 +1602,9 @@ class ScheduledTransaction:
         )
         self.amount: int = self._json.get("amount", 0)
         self.memo: str = self._json.get("memo", "")
+        flag_color_value = self._json.get("flag_color", None) or None
         self.flag_color: enums.TransactionFlagColor = enums.TransactionFlagColor(
-            self._json.get("flag_color", "")
+            flag_color_value
         )
         self.flag_name: str = self._json.get("flag_name", "")
         self.account_id: str = self._json.get("account_id", "")
